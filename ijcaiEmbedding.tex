@@ -11,13 +11,6 @@
 \usepackage{ijcai13}
 
 
-
-
-
-
-
-
-
 % Use the postscript times font!
 \usepackage{times}
 
@@ -50,6 +43,9 @@
 \DeclareMathOperator*{\SSE}{SSE}
 \DeclareMathOperator*{\SE}{SE}
 
+\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
+
+
 % For figures
 \usepackage{graphicx} % more modern
 %\usepackage{epsfig} % less modern
@@ -62,6 +58,7 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
+
 % As of 2011, we use the hyperref package to produce hyperlinks in the
 % resulting PDF.  If this breaks your system, please commend out the
 % following usepackage line and replace \usepackage{icml2013} with
@@ -71,12 +68,6 @@
 % Packages hyperref and algorithmic misbehave sometimes.  We can fix
 % this with the following command.
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
-
-
-
-
-
-
 
 
 % the following package is optional:
@@ -102,8 +93,17 @@
 % page charge instructions.
 % Put where the files are available in the appropriate places.
 
+
 \title{Bayesian Optimization in High Dimensions via Random Embeddings}
-\author{Bayesian optimization, machine learning}
+
+\author{Ziyu Wang\footnote{},
+Masrour Zoghi\footnote{},
+Frank Hutter\samethanks[1],
+David Matheson\samethanks[1],
+Nando de Freitas\samethanks[1]\\
+\samethanks[1]University of British Columbia, Canada \\
+\samethanks[2]University of Amsterdam, the Netherlands\\
+\samethanks[1]\{ziyuw, hutter, davidm, nando\}@cs.ubc.ca, \samethanks[2]m.zoghi@uva.nl}
 
 \begin{document}
 
