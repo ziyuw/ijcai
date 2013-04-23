@@ -593,7 +593,7 @@ Figure \ref{fig:lpsolve} (top) compares BO, REMBO, and the baseline random searc
 %ParamILS~\cite{ParamILS-JAIR} (which was used for all configuration experiments in~\cite{Hutter:2010}), 
 and SMAC \cite{Hutter:2011}. 
 ParamILS and SMAC were specifically designed for the configuration of algorithms with many discrete parameters and define the current state of the art for this problem. Nevertheless, here SMAC and our vanilla REMBO method performed best. Based on a Mann-Whitney U test with Bonferroni multiple-test correction, they both yielded statistically significantly better results than both Random and standard BO; no other performance differences were significant.
-The figure only shows REMBO with $d=5$ to avoid clutter, but we did not optimize this parameter; the only other value we tried ($d=3$) resulted in indistinguishable performance. 
+The figure only shows REMBO with $d=5$ to avoid clutter, but we did not optimize this parameter; the only other value we tried ($d=3$) resulted in indistinguishable . 
 
 As in the synthetic experiment, REMBO's performance could be further improved by using multiple interleaved runs. 
 However, it is known that multiple independent runs also benefit the other procedures, especially ParamILS~\cite{HutHooLey12-ParallelAC}. Thus, to be fair, we re-evaluated all approaches using interleaved runs. Figure \ref{fig:lpsolve} (bottom) shows that ParamILS and REMBO benefitted most from interleaving $k=4$ runs. However, the statistical test results did not change, still showing that SMAC and REMBO outperformed Random and BO, with no other significant performance differences.
