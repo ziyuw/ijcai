@@ -381,12 +381,12 @@ Finally, when using the high-dimensional kernel, the regret bounds of \cite{Srin
 
 
 \begin{figure*}[t!]
-\centering
   \includegraphics[scale=0.4]{figures/branin_dis_25.png}
   \includegraphics[scale=0.4]{figures/branin_dis_rot.png}
   \includegraphics[scale=0.4]{figures/branin_dis_1b.png}
-  \caption{Comparison of random search (RANDOM), standard Bayesian optimization (BO), and REMBO.
-Left: $D=25$ extrinsic dimensions; Middle: $D=25$, with a rotated objective function; Right: $D=1\,000\,000\,000$ extrinsic dimensions. For each method, we plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
+  \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+  method by~\protect\cite{Chen:2012} (HD BO), and REMBO.
+Left: $D=25$ extrinsic dimensions; Middle: $D=25$, with a rotated objective function; Right: $D=10^9$ extrinsic dimensions. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
   \label{fig:standard}
   \vspace{-1.0em}
 \end{figure*}
@@ -455,7 +455,6 @@ We show mean and standard deviations of the optimality gap achieved after 500 fu
 \label{fig:braninresult}
 \vspace*{-3mm}
 \end{table}
-
 
 We evaluate REMBO using a fixed budget of $500$ function
 evaluations that is spread across multiple interleaved runs ---
