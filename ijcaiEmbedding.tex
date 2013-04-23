@@ -402,9 +402,11 @@ Finally, when using the high-dimensional kernel, the regret bounds of \cite{Srin
 
 
 \begin{figure*}[t!]
+  \vspace{-1.0em}
   \includegraphics[scale=0.4]{figures/branin_dis_25.png}
   \includegraphics[scale=0.4]{figures/branin_dis_rot.png}
   \includegraphics[scale=0.4]{figures/branin_dis_1b.png}
+  \vspace{-1.0em}
   \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
   method by~\protect\cite{Chen:2012} (HD BO), and REMBO.
 Left: $D=25$ extrinsic dimensions; Middle: $D=25$, with a rotated objective function; Right: $D=10^9$ extrinsic dimensions. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
@@ -498,7 +500,9 @@ Finally, since REMBO is independent of the extrinsic dimensionality $D$ as long 
 To the best of our knowledge, the only other existing method that can be run in such high dimensionality is random search.
 
 For reference, we also evaluated the method of \cite{Chen:2012} for these functions, confirming that it does not handle rotation gracefully: 
-while it performed best in the non-rotated case for $D=25$, it performed worst in the rotated case (tying with standard BO). It could not be used efficiently for more than $D=1,000$.
+while it performed best in the non-rotated case for $D=25$, it performed worst in the rotated case. It could not be used efficiently for more than $D=1,000$.
+Based on a Mann-Whitney U test with Bonferroni multiple-test correction, all performance differences were statistically significant, except Random vs. standard BO.
+
 %other recent method targetting 
 %Experiments with the code of \cite{Chen:2012} (not reported in detail for lack of space) confirm that their method \emph{is} affected by the rotation: while it performed best in the non-rotated case, it performed worst in the rotated case (tying with standard BO).
 % it performed just as poorly as standard BO.
@@ -588,7 +592,7 @@ Due to the discrete nature of this optimization problem, we could only apply REM
 Figure \ref{fig:lpsolve} (top) compares BO, REMBO, and the baseline random search against ParamILS (which was used for all configuration experiments in \cite{Hutter:2010})
 %ParamILS~\cite{ParamILS-JAIR} (which was used for all configuration experiments in~\cite{Hutter:2010}), 
 and SMAC \cite{Hutter:2011}. 
-ParamILS and SMAC were specifically designed for the configuration of algorithms with many discrete parameters and define the current state of the art for this problem. Nevertheless, here SMAC and our vanilla REMBO method performed best. Based on a Mann–Whitney U test with Bonferroni multiple-test correction, they both yielded statistically significantly better results than both Random and standard BO; no other performance differences were significant.
+ParamILS and SMAC were specifically designed for the configuration of algorithms with many discrete parameters and define the current state of the art for this problem. Nevertheless, here SMAC and our vanilla REMBO method performed best. Based on a Mann-Whitney U test with Bonferroni multiple-test correction, they both yielded statistically significantly better results than both Random and standard BO; no other performance differences were significant.
 The figure only shows REMBO with $d=5$ to avoid clutter, but we did not optimize this parameter; the only other value we tried ($d=3$) resulted in indistinguishable performance. 
 
 As in the synthetic experiment, REMBO's performance could be further improved by using multiple interleaved runs. 
