@@ -452,7 +452,6 @@ REMBO variants using a total of $500$ function evaluations. The variants differe
 %We initialized all methods to the same random point and 
 We show mean and standard deviations of the optimality gap achieved after 500 function evaluations. 
 \label{tab:rembo_variants_results}}
-\label{fig:braninresult}
 \vspace*{-3mm}
 \end{table}
 
@@ -532,9 +531,10 @@ while it performed best in the non-rotated case for $D=25$, it performed worst i
   \includegraphics[scale=0.35]{figures/lpsolve_interleave.png}
   \caption{Performance of various methods for configuration of \texttt{lpsolve}; we show the optimality gap \texttt{lpsolve} achieved with the configurations found by the various methods (lower is better). Top: a single run of each method; Bottom: performance with $k=4$ interleaved runs. We plot means and $1/4$ standard deviation confidence to avoid clutter. Note that the standard deviation of the mean would be slightly smaller
   than the ones plotted as we repeat the experiment 20 times.}
+  \label{fig:lpsolve}
 \end{center}
 \vspace*{-3mm}
-\label{fig:lpsolve} 
+ 
 \end{figure}
 State-of-the-art algorithms for solving hard computational problems tend to parameterize several design choices in order to allow a customization of the algorithm to new problem domains. Automated methods for algorithm configuration have recently demonstrated that substantial performance gains of state-of-the-art algorithms can be achieved in a fully automated fashion~\cite{Mockus:1999,Hutter:2010,Bergstra:2011,Wang:2011}. These successes have led to a paradigm shift in algorithm development towards the 
 active design of highly parameterized frameworks that can be automatically customized to particular problem domains using optimization~\cite{Hoos:2012:PO:2076450.2076469,Bergstra:model_search}.
