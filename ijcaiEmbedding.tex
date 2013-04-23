@@ -10,6 +10,16 @@
 % The file ijcai13.sty is the style file for IJCAI-13 (same as ijcai07.sty).
 \usepackage{ijcai13}
 
+ \let\oldthebibliography=\thebibliography
+  \let\endoldthebibliography=\endthebibliography
+  \renewenvironment{thebibliography}[1]{%
+    \begin{oldthebibliography}{#1}%
+      \setlength{\parskip}{0ex}%
+      \setlength{\itemsep}{2ex}%
+  }%
+  {%
+    \end{oldthebibliography}%
+  }
 
 % Use the postscript times font!
 \usepackage{times}
@@ -87,17 +97,27 @@
 % page charge instructions.
 % Put where the files are available in the appropriate places.
 
-
 \title{Bayesian Optimization in High Dimensions via Random Embeddings}
+
+%\author{Ziyu Wang\footnote{},
+%Masrour Zoghi\footnote{},
+%Frank Hutter\samethanks[1],
+%David Matheson\samethanks[1],
+%Nando de Freitas\samethanks[1]\\
+%\samethanks[1]University of British Columbia, Canada \\
+%\samethanks[2]University of Amsterdam, the Netherlands\\
+%\samethanks[1]\{ziyuw, hutter, davidm, nando\}@cs.ubc.ca, \samethanks[2]m.zoghi@uva.nl}
 
 \author{Ziyu Wang\footnote{},
 Masrour Zoghi\footnote{},
-Frank Hutter\samethanks[1],
+Frank Hutter\footnote{},
 David Matheson\samethanks[1],
 Nando de Freitas\samethanks[1]\\
 \samethanks[1]University of British Columbia, Canada \\
 \samethanks[2]University of Amsterdam, the Netherlands\\
-\samethanks[1]\{ziyuw, hutter, davidm, nando\}@cs.ubc.ca, \samethanks[2]m.zoghi@uva.nl}
+\samethanks[3]Freiburg University, Germany\\
+\samethanks[1]\{ziyuw, davidm, nando\}@cs.ubc.ca, \samethanks[2]m.zoghi@uva.nl, \samethanks[3]fh@informatik.uni-freiburg.de}
+
 
 \begin{document}
 
@@ -448,6 +468,7 @@ $k$ & $d=2$ & $d=4$ & $d=6$ \\
   1 & 0.7406 $\pm$ 1.8996 & 0.0143 $\pm$ 0.0406 & 0.1137 $\pm$ 0.1202 \\
 \end{tabular}
 \end{center}
+\vspace*{-3mm}
 \caption{Optimality gap for $d_e=2$-dimensional Branin function embedded in $D=25$ dimensions, for
 REMBO variants using a total of $500$ function evaluations. The variants differed in the internal dimensionality $d$ and in the number of interleaved runs $k$ (each such run was only allowed $500/k$ function evaluations).
 %We initialized all methods to the same random point and 
@@ -530,8 +551,9 @@ while it performed best in the non-rotated case for $D=25$, it performed worst i
 \begin{center}
   \includegraphics[scale=0.35]{figures/lpsolve.png}\\
   \includegraphics[scale=0.35]{figures/lpsolve_interleave.png}
-  \caption{Performance of various methods for configuration of \texttt{lpsolve}; we show the optimality gap \texttt{lpsolve} achieved with the configurations found by the various methods (lower is better). Top: a single run of each method; Bottom: performance with $k=4$ interleaved runs. We plot means and $1/4$ standard deviation confidence. Note that the standard deviation of the mean would be slightly smaller
-than the ones plotted as we repeat the experiment 20 times.}
+  \caption{Performance of various methods for configuration of \texttt{lpsolve}; we show the optimality gap \texttt{lpsolve} achieved with the configurations found by the various methods (lower is better). Top: a single run of each method; Bottom: performance with $k=4$ interleaved runs. We plot means and $1/4$ standard deviations over 20 repetitions of the experiment.
+        %results of 20  confidence. Note that the standard deviation of the mean would be slightly smaller than the ones plotted as we repeat the experiment 20 times.
+        }
 \label{fig:lpsolve}
 \end{center}
 \vspace*{-3mm}
@@ -545,7 +567,7 @@ It has recently been demonstrated that many algorithm configuration problems hav
 Here, we demonstrate that REMBO can exploit this low dimensionality even in the discrete spaces typically encountered in algorithm configuration. 
 We use a configuration problem obtained from \cite{Hutter:2010}, aiming to configure the 40 binary and 7 categorical parameters of \texttt{lpsolve}\footnote{http://lpsolve.sourceforge.net/}, a popular mixed integer linear programming solver that has been downloaded over 40\,000 times in the last year.
 The objective is to minimize the optimality gap \texttt{lpsolve} can obtain in a time limit of five seconds for a mixed integer programming (MIP) encoding of a wildlife corridor problem from computational sustainability~\cite{ghs08:connection}.
-Algorithm configuration usually aims to improve performance for a representative set of problem instances, and effective methods need to solve two orthogonal problems: searching the parameter space effectively and deciding how many instances to use in each evaluation (to trade off computational overhead and over-fitting). Our contribution is for the first of these problems; to focus on how effectively the different methods search the parameter space, we only consider configuration on a single problem instance (i.e., a deterministic blackbox optimization problem).
+Algorithm configuration aims to improve performance for a representative set of problem instances, and effective methods need to solve two orthogonal problems: searching the parameter space effectively and deciding how many resources to spend in each evaluation (to trade off computational overhead and over-fitting). Our contribution is for the first of these problems; to focus on how effectively the different methods search the parameter space, we only consider configuration on a single problem instance (i.e., a deterministic blackbox optimization problem; further work is required to tackle general algorithm configuration problems with randomized algorithms and distributions of problem instances).
 
 Due to the discrete nature of this optimization problem, we could only apply REMBO using the high-dimensional kernel for categorical variables $k^D_{\lambda}(\vy^{(1)}, \vy^{(2)})$ described in Section \ref{sec:choice_of_kernel}. While we have not proven any theoretical guarantees for discrete optimization problems, REMBO appears to effectively exploit the low effective dimensionality of at least this particular optimization problem.
 
@@ -558,8 +580,6 @@ However, remarkably, our vanilla REMBO method performed even slightly better. Wh
 
 As in the synthetic experiment, REMBO's performance could be further improved by using multiple interleaved runs.
 However, it is known that multiple independent runs can also improve the performance of the other procedures, especially ParamILS~\cite{HutHooLey12-ParallelAC}. Thus, to be fair, we re-evaluated all approaches using interleaved runs. Figure \ref{fig:lpsolve} (bottom) shows that when using $k=4$ interleaved runs of $500$ evaluations each, REMBO and ParamILS performed best, with a slight advantage for REMBO early on in the search.
-
-
 
 % \note{FH: Ziyu, we need to add statistical significance here that the reviewer complained about! You gave significance results in the rebuttal, but I don't recall them and I don't recall the test you used, either. Can you please mention this here?}
 
@@ -575,7 +595,6 @@ thereby providing further evidence for the observation (already put forward by B
 important dimensions indeed appears to be much lower than their extrinsic dimensionality. Of course, we do not yet know how many practical optimization problems fall within the class of problems where REMBO applies. With time and the release of the code, we will find more evidence. For the time being, the success achieved in the examples presented in this paper 
 %(including the automatic configuration of a very popular solver) %FH: repetitive, so I commented it to save space.
 is very encouraging.
-
 
 
 
