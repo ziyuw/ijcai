@@ -1,0 +1,166 @@
+\documentclass[grey]{beamer}
+% Class options include: notes, notesonly, handout, trans,
+%                        hidesubsections, shadesubsections,
+%                        inrow, blue, red, grey, brown
+\include{mydef}
+\usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx} 
+\usepackage{etoolbox}
+
+% Theme for beamer presentation.
+\setbeamertemplate{footline}[page number]{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{myColor}{rgb}{0.1,0.0,0.8}
+
+\setbeamertemplate{theorems}[numbered]
+\pretocmd{\part}{\setcounter{theorem}{0}}{}{}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% \usepackage{Antibes} 
+\usepackage{seahorse}
+% Other themes include: beamerthemetree, beamerthemelined, 
+%                       beamerthemetree, beamerthemetreebars  
+
+\title{Bayesian Optimization in High Dimensions via Random Embeddings}    
+\author[Ziyu Wang]{Ziyu Wang\\ [3mm]Joint work with Masrour Zoghi, Frank Hutter
+, David Matheson, Nando de Freitas}
+
+\date{}                    % Enter the date or \today between curly braces
+
+
+
+% NOTE:  Joint work with Prof. Nando de Freitas
+
+\begin{document}
+
+% Creates title page of slide show using above information
+\begin{frame}
+  \titlepage
+\end{frame}
+\note{Talk for 20 minutes} % Add notes to yourself that will be displayed when
+                           % typeset with the notes or notesonly class options
+
+\section[Outline]{}
+
+% Creates table of contents slide incorporating
+% all \section and \subsection commands
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+
+\section{Introduction}
+\label{sec:ahmc}
+\begin{frame}<beamer>
+ \tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Bayesian Opitmization}
+ {\bf \textcolor{myColor}{Bayesian Optimization (BO)}}
+
+ Let $f: {\cal X} \to \mathbb{R}$ be a function on a compact subset 
+ ${\cal X} \subseteq \mathbb{R}^D$. 
+ BO addresses the following global optimization problem
+ \[ \vx^{\star} = \argmax_{\vx \in {\cal X}} f(\vx). \]
+
+ We are particularly interested in objective functions $f$ 
+ that may satisfy one or more of the following criteria: 
+ \begin{itemize}
+  \item expensive to evaluate,
+  \item do not have easily available derivatives.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Bayesian Opitmization}
+ \begin{itemize}
+  \item BO uses a prior distribution that captures our beliefs about the behavior of $f$
+  (often {\bf \textcolor{myColor}{Gaussian process (GP)}} prior).
+  \item It then updates this prior with sequentially acquired data.
+ \end{itemize}
+
+ Specifically, it iterates the following phases:
+ \begin{enumerate}
+  \item use the prior to decide at which input $x\in \cal X$ to query $f$ next
+  by optimizing {\bf \textcolor{myColor}{aquisition functions}};
+  \item evaluate $f(x)$;
+  \item update the prior based on the new data $\langle{}x, f(x)\rangle$.
+ \end{enumerate}
+\end{frame}
+
+ \begin{frame}
+ \frametitle{Bayesian Opitmization}
+  \begin{figure}
+   \centering
+   \includegraphics[width=0.75\columnwidth]
+   {./figs/bo}
+   \label{fig:traj}
+  \end{figure}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{Curse of dimensionality}
+  \begin{itemize}
+   \item BO is an {\bf \textcolor{myColor}{global}} 
+    optimization algorithm. Thus it has to 
+    {\bf \textcolor{myColor}{explore throughly}}.
+   \item But the volume to be explored increases 
+   {\bf \textcolor{myColor}{exponentially}} with dimensionality.
+   \item In high dimensional problems, BO may explore too much!
+   \item Thus we are cursed!
+  \end{itemize}
+ \end{frame}
+
+ 
+
+\section{REMBO}
+ \begin{frame}<beamer>
+  \tableofcontents[currentsection]
+ 
+ \end{frame}
+   
+ \begin{frame}
+   \frametitle{Irrelevant dimensions}
+    \begin{minipage}[l]{0.5\columnwidth}
+     \begin{itemize}
+      \item Many researchers have noted that for certain classes of problems 
+       most dimensions do not change the objective function significantly.
+      \item That is to say these problems have 
+       {\bf \textcolor{myColor}{low effective dimensionality}}.
+     \end{itemize}
+
+    \end{minipage}
+    \begin{minipage}[r]{0.485\columnwidth}
+     \begin{figure}[t]
+      \includegraphics[width = 1.2\columnwidth]
+      {./figs/irrelevant}
+      \label{fig:ESSL_BLR}
+     \end{figure}
+    \end{minipage}
+  \end{frame}
+
+ \begin{frame}
+  \frametitle{Random Embedding}
+  To take advantage of low effective dimensionality, we propose to 
+  randomly {\bf \textcolor{myColor}{embed}} 
+  a low dimensional space into the high dimensional space and optimize
+  only on the low dimensional space.
+  \begin{figure}[t]
+   \includegraphics[width = 0.9\columnwidth]
+   {../paper/figures/2to1embedding}
+   \label{fig:ESSL_BLR}
+  \end{figure}
+ \end{frame}
+ \begin{frame}
+  
+ \end{frame}
+
+
+\end{document}
