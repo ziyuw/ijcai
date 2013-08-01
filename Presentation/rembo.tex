@@ -8,7 +8,7 @@
 \usepackage{algorithmic}
 \usepackage{graphicx} 
 \usepackage{etoolbox}
-
+\usepackage{xcolor}
 % Theme for beamer presentation.
 \setbeamertemplate{footline}[page number]{}
 \setbeamertemplate{headline}{}
@@ -28,8 +28,8 @@
 %                       beamerthemetree, beamerthemetreebars  
 
 \title{Bayesian Optimization in High Dimensions via Random Embeddings}    
-\author[Ziyu Wang]{Ziyu Wang\\ [3mm]Joint work with Masrour Zoghi, Frank Hutter
-, David Matheson, Nando de Freitas}
+\author[Ziyu Wang]{Ziyu Wang\\ [3mm]Joint work with Masrour Zoghi, Frank Hutter, 
+David Matheson, Nando de Freitas}
 
 \date{}                    % Enter the date or \today between curly braces
 
@@ -55,7 +55,7 @@
 \end{frame}
 
 
-\section{Introduction}
+\section{Motivation}
 \label{sec:ahmc}
 \begin{frame}<beamer>
  \tableofcontents[currentsection]
@@ -73,6 +73,7 @@
  We are particularly interested in objective functions $f$ 
  that may satisfy one or more of the following criteria: 
  \begin{itemize}
+  \item noisy,
   \item expensive to evaluate,
   \item do not have easily available derivatives.
  \end{itemize}
@@ -81,8 +82,8 @@
 \begin{frame}
  \frametitle{Bayesian Opitmization}
  \begin{itemize}
-  \item BO uses a prior distribution that captures our beliefs about the behavior of $f$
-  (often {\bf \textcolor{myColor}{Gaussian process (GP)}} prior).
+  \item BO uses a prior distribution 
+  that captures our beliefs about the behavior of $f$.
   \item It then updates this prior with sequentially acquired data.
  \end{itemize}
 
@@ -106,15 +107,17 @@
  \end{frame}
 
  \begin{frame}
- \frametitle{Curse of dimensionality}
+ \frametitle{Curse of Dimensionality}
   \begin{itemize}
-   \item BO is an {\bf \textcolor{myColor}{global}} 
+   \item In recent years, the artificial intelligence community has increasingly used Bayesian optimization; see for example~\cite{Martinez-Cantin:2009,Brochu:2009,Srinivas:2010,Hoffman:2011,Lizotte:2011,Azimi:2012}
+   \item But BO is an {\bf \textcolor{myColor}{global}} 
     optimization algorithm. Thus it has to 
     {\bf \textcolor{myColor}{explore throughly}}.
    \item But the volume to be explored increases 
    {\bf \textcolor{myColor}{exponentially}} with dimensionality.
    \item In high dimensional problems, BO may explore too much!
    \item Thus we are cursed!
+   
   \end{itemize}
  \end{frame}
 
@@ -123,7 +126,6 @@
 \section{REMBO}
  \begin{frame}<beamer>
   \tableofcontents[currentsection]
- 
  \end{frame}
    
  \begin{frame}
@@ -131,9 +133,10 @@
     \begin{minipage}[l]{0.5\columnwidth}
      \begin{itemize}
       \item Many researchers have noted that for certain classes of problems 
-       most dimensions do not change the objective function significantly.
+       most dimensions do not change the objective function significantly
+       ~\cite{Bergstra:2012,Hutter:2013_KeyParameters}.
       \item That is to say these problems have 
-       {\bf \textcolor{myColor}{low effective dimensionality}}.
+       {\bf \textcolor{myColor}{low effective dimensionality}}
      \end{itemize}
 
     \end{minipage}
@@ -158,9 +161,134 @@
    \label{fig:ESSL_BLR}
   \end{figure}
  \end{frame}
+ 
  \begin{frame}
-  
+  \frametitle{REMBO}
+  \begin{itemize}
+   \item Choose compact set {\bf \textcolor{myColor}{$\mathcal{Y}$}}.
+   \item Draw a random Gaussian matrix A.
+   \item Repeat:
+   \begin{enumerate}
+    \item Use the prior to decide at which input $y \in \cal Y$ to query $f$ next
+    by optimizing aquisition functions;
+    \item Evaluate {\bf \textcolor{myColor}{$f(Ay)$}};
+    \item Update the prior based on the new data 
+    {\bf \textcolor{myColor}{$\langle{}y, f(Ay)\rangle$}}.
+   \end{enumerate}
+  \end{itemize}
  \end{frame}
 
+ \begin{frame}
+  \begin{figure}[t!]
+\centering
+  \includegraphics[scale=0.28]{../paper/figures/projection.pdf}
+  \caption{Embedding from $d=1$ into $D=2$. The box illustrates the 2D constrained space ${\cal X}$, while the thicker red line illustrates the 1D constrained space $\mathcal{Y}$. {\bf \textcolor{myColor}{The set $\mathcal{Y}$ must be chosen large enough}} so that the projection of its image, $\vA \mathcal{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.}
+  \label{fig:proj}
+  \vspace{-1em}
+\end{figure}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Guarantees}
+  \begin{theorem}
+   \label{prop:1}
+   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random matrix $\vA \in \mathbb{R}^{D\times d}$ with independent entries sampled according to $\mathcal{N}(0, 1)$ and $d\geq d_e$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
+  \end{theorem}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Setting $\cal Y$}
+  \begin{theorem}
+   \label{prop:2}
+   Suppose we want to optimize a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimension $d_e \leq d$ subject to the box constraint $\mathcal{X} \subset \mathbb{R}^D$, where $\mathcal{X}$ is centered around $\mathbf{0}$. Let us denote one of the optimizers by $\vx^{\star}$.
+   Suppose further that the effective subspace $\cal T$ of $f$ is such that $\cal T$ is the span of $d_e$ basis vectors. 
+   Let $\vx^{\star}_\top \in \cal{T} \cap \mathcal{X}$ be an optimizer of $f$ inside $\mathcal{T}$. 
+   If $\vA$ is a $D\times d$ random matrix with independent standard Gaussian entries,
+   there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$ with probability at least $1-\epsilon$.
+ \end{theorem}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Low VS. High dimensional Kernel}
+  \begin{itemize}
+   \item {\bf \textcolor{myColor}{low-dimensional kernel}} (defined on 
+   {\bf \textcolor{myColor}{$\cal Y$}}):
+  \[ k_{\ell}^d(\vy^{(1)},\vy^{(2)}) = \exp\left({-\frac{\|\vy^{(1)}-\vy^{(2)}\|^2}{2\ell^2}}\right). \]
+   \item {\bf \textcolor{myColor}{high-dimensional kernel}} (defined on 
+   {\bf \textcolor{myColor}{$\cal X$}}):  
+  $$k_{\ell}^D(\vy^{(1)}, \vy^2) = \exp\left( -\frac{\| p_{\mathcal{X}}(\vA\vy^{(1)}) - p_{\mathcal{X}}(\vA\vy^{(2)}) \|^2}{2\ell^2} \right),$$
+where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard projection operator for our box-constraint: $p_{\mathcal{X}}(\vy) = {\arg \min}_{\vz\in \mathcal{X}} \|\vz-\vy\|_2$; . 
+  \end{itemize}
+
+ \end{frame}
+
+
+ \section{Experiments}
+ \begin{frame}<beamer>
+  \tableofcontents[currentsection]
+ \end{frame}
+ 
+ \begin{frame}<beamer>
+  \frametitle{BO in 1,000,000,000 dimensions}
+  \begin{figure}
+%    \includegraphics[width=0.31\columnwidth]{../paper/figures/branin_dis_25.png}
+%    \includegraphics[width=0.31\columnwidth]{../paper/figures/branin_dis_rot.png}
+   \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_1b.png}
+   \caption{Comparison of random search (RANDOM) and REMBO
+     in $D=10^9$ extrinsic dimensions. 
+     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+ 
+ \begin{frame}<beamer>
+  \frametitle{Invariant to rotation}
+  
+  
+  \begin{figure}
+%    \includegraphics[width=0.31\columnwidth]{../paper/figures/branin_dis_25.png}
+   \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_rot.png}
+%    \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_1b.png}
+   \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\protect\cite{Chen:2012} (HD BO), and REMBO.
+     $D=25$, with a rotated objective function. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+
+ \begin{frame}<beamer>
+ \frametitle{Automatic Configuration of a Mixed Integer
+Linear Programming Solver}
+  \begin{figure}[h!]
+   \begin{center}
+     \includegraphics[scale=0.35]{../paper/figures/lpsolve.png}\\
+%      \includegraphics[scale=0.35]{../paper/figures/lpsolve_interleave.png}
+     \caption{Performance for configuration of \texttt{lpsolve}; we show the optimality gap \texttt{lpsolve} achieved with the configurations found by the various methods (lower is better). 
+%      Top: a single run of each method; Bottom: performance with $k=4$ interleaved runs. We plot means and $1/4$ standard deviations over 20 repetitions of the experiment.
+           %results of 20  confidence. Note that the standard deviation of the mean would be slightly smaller than the ones plotted as we repeat the experiment 20 times.
+           }
+   \label{fig:lpsolve}
+   \end{center}
+   \vspace*{-3mm}
+  \end{figure}
+ \end{frame}
+
+ \begin{frame}{Bibliography}
+  \tiny
+  \bibliographystyle{plain}
+  \bibliography{../paper/bayesopt}
+ \end{frame}
+ 
+ \begin{frame}<beamer>
+ \frametitle{Thank You!}
+  \begin{center}
+  \huge
+    Questions?
+  \end{center}
+ \end{frame}
+ 
+ 
+
+ 
 
 \end{document}
