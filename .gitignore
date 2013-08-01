@@ -5,3 +5,6 @@
 *.log
 *.backup
 *.out
+*.nav
+*.snm
+*.toc

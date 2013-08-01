@@ -1,0 +1,97 @@
+\documentclass[final]{beamer}
+\usepackage{amsmath,amsthm,amssymb}
+
+\usepackage{tikz}
+\usepackage{wrapfig}
+% \usepackage{algorithm}
+\usepackage{algorithmic}
+
+\include{mydef}
+\input{macros}
+\usetikzlibrary{calc}
+
+\usetheme{ubc}
+\usepackage[orientation=portrait,size=a0,scale=1.22,debug]{beamerposter}
+
+\newtheorem{mydefinition}{Definition}
+\newtheorem{proposition}[mydefinition]{Proposition}
+
+\newcommand{\xbest}{\mathbf{\vx}^{+}}
+
+\newcommand{\vectornorm}[1]{\left|\left|#1\right|\right|}
+\def\sigman{\sigma}
+\newcommand{\SSR}{\mbox{SSR}}
+\newcommand{\murf}{\mu_{\mathtt{rf}}}
+\newcommand{\sigrf}{\sigma^2_{\mathtt{rf}}}
+\newcommand{\eirf}{EI_{\mathtt{rf}}}
+\newcommand{\func}{(\cdot)}
+\newcommand{\tree}{\mathcal{T}}
+\newcommand{\fmap}{\widehat{\mathbf{f}}}
+\newcommand{\vxstar}{\mathbf{x}^{\star}}
+\newcommand{\vxbest}{\mathbf{x}^{+}}
+\newcommand\TT{\rule{0pt}{2.6ex}}
+\newcommand\BB{\rule[-1.2ex]{0pt}{0pt}}
+\newcommand{\FIM}{{\bf J}}
+\DeclareMathOperator*{\argmax}{argmax}
+% \DeclareMathOperator*{\argmin}{argmin}
+\newcommand{\sfrac}[2]{\leavevmode\kern.1em
+           \raise.5ex\hbox{\footnotesize #1}\kern-.1em
+                   /\kern-.15em\lower.25ex\hbox{\footnotesize #2}}
+
+\def\mnote#1{\marginpar{\tiny #1}}
+\def\rmnote#1{\reversemarginpar{\tiny #1}}
+\def\capstyle#1{\small \emph{#1}}
+
+
+
+
+%===============================================================================
+\title{Bayesian Optimization in High Dimensions via Random Embeddings}
+\author{Ziyu Wang, Masrour Zoghi, Frank Hutter, 
+David Matheson, Nando de Freitas}
+\institute{
+Computer Science Department, University of British Columbia}
+\homepage{http://www.cs.ubc.ca/\string~ziyuw}
+
+\begin{document}
+\begin{frame}[t]
+\begin{columns}[T]
+\begin{column}{.48\textwidth}
+
+% COLUMN 1.
+%===============================================================================
+\begin{block}{Contributions}
+ Despite these successes, the approach is restricted to problems of moderate dimension, and several 
+workshops on Bayesian optimization have identified its scaling to high dimensions as one of the holy grails of the field. 
+In this paper, we introduce a novel random embedding idea to attack this problem.
+The resulting Random EMbedding Bayesian Optimization (REMBO) algorithm is very simple
+and applies to domains with both categorical and continuous variables. 
+The experiments demonstrate that REMBO can effectively solve high-dimensional problems, including automatic parameter configuration of a popular
+mixed integer linear programming solver.
+\begin{itemize}
+ \item Bayesian optimization techniques have been successfully applied to robotics, planning, sensor placement, recommendation, advertising, intelligent user interfaces and automatic algorithm configuration.
+\end{itemize}
+
+
+\end{block}
+
+\begin{block}{Algorithm}
+ 
+\end{block}
+
+
+
+
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New Column
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{column}{.48\textwidth}
+
+%===============================================================================
+\end{column}
+\end{columns}
+\end{frame}
+\end{document}
+

@@ -1,0 +1,126 @@
+\ProvidesPackage{beamerthemeubc}
+
+% this style is based on I6pd created by Philippe Dreuw.
+% modifications made by Matt Hoffman.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\selectcolormodel{cmyk}
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% create custom colors.
+\definecolor{background}{HTML}{A4A4A4}
+\definecolor{accent}{HTML}{616D7E}
+\definecolor{header}{HTML}{045FB4}
+\definecolor{headertext}{HTML}{FFFFFF}
+
+% \definecolor{hilite}{}{FFDD11}
+\setbeamercolor{hilite}{bg=yellow!50}
+
+% set the colors.
+\setbeamercolor{separation line}{bg=accent}
+\setbeamercolor{headline}{fg=headertext, bg=header}
+\setbeamercolor{footline}{fg=headertext, bg=header}
+\setbeamerfont{footline}{size=\normalsize}
+
+
+\setbeamercolor*{normal text}{fg=black,bg=background}
+\setbeamercolor*{block body}{bg=white,fg=black}
+\setbeamercolor*{block title}{fg=headertext, bg=header}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{bibliography item}{}
+\setbeamertemplate{bibliography entry author}{}
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+
+\setbeamerfont{bibliography entry author}  {size=\footnotesize}
+\setbeamerfont{bibliography entry title}   {shape=\itshape}
+\setbeamerfont{bibliography entry location}{shape=\upshape}
+\setbeamerfont{bibliography entry note}    {shape=\itshape}
+
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry location}{fg=black}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\homepage}[1]{\def\@homepage{#1}}
+\homepage{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{block begin}{
+	\begin{beamercolorbox}[rounded=true,colsep=.5ex]
+		{block title}
+		\usebeamerfont*{block title}
+		\large\insertblocktitle
+	\end{beamercolorbox}%
+	\begin{beamercolorbox}[rounded=true,colsep=1ex,vmode]{block body}
+	\begin{minipage}{.97\textwidth}
+}
+
+\setbeamertemplate{block end}{
+	\end{minipage}
+	\end{beamercolorbox}
+	\vskip2ex
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{headline}{  
+	\leavevmode
+	\begin{beamercolorbox}[wd=\paperwidth]{headline}
+	\begin{columns}[T]
+		\begin{column}{.05\paperwidth}
+		\end{column}
+		\begin{column}{.1\paperwidth}
+			\vspace{2em}
+			\includegraphics[height=2in]{figs/ubc_white}
+		\end{column}
+		\begin{column}{.7\paperwidth}
+			\vskip5ex
+			\begin{center}
+			\usebeamercolor{title in headline}
+				{\color{fg}\bf\huge\inserttitle\\[.5ex]}
+			\usebeamercolor{author in headline}
+				{\color{fg}\large\insertauthor\\[.2ex]}
+			\usebeamercolor{institute in headline}
+				{\color{fg}\large\insertinstitute}
+			\end{center}
+		\end{column}
+		\begin{column}{.1\paperwidth}
+% 			\flushright
+% 			\vspace{1.3em}
+% 			\includegraphics[height=1.9in,
+% 			trim=0 0 3.3cm 0, clip=true]{figs/INRIA_white}
+% 		\end{column}
+% 		\begin{column}{.05\paperwidth}
+		\end{column}
+	\end{columns}
+	\vspace{1.5em}
+	\end{beamercolorbox}
+
+	\begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
+		\rule{0pt}{2pt}
+	\end{beamercolorbox}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{footline}{
+	\begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+	\rule{0pt}{2pt}
+	\end{beamercolorbox}
+
+	\begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{footline}
+		\hfill \texttt{\@homepage}
+		\vskip1ex
+	\end{beamercolorbox}
+
+	\begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+		\rule{0pt}{2pt}
+	\end{beamercolorbox}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<all>
+
