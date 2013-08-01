@@ -17,4 +17,14 @@ Here the high dimensional space X is the square. instead of optimizing over it d
 
 As we can see optimizing Y is the same as optimizing over the blue line AY.
 
-And if 
+Howevee, since the embedding is random, we have to  make sure that the optimizer is included in AY?
+
+### 14
+First, this result shows that if you are willing to make Y very big (As in choose Y as a really big box), with probability 1 we have the opimimum contained in Y. 
+Of course, this is under the assumption that the effective dimensionality is low.
+
+But this still does tell us how to set Y.
+
+### 15
+What the next thm tells us is that 
+
