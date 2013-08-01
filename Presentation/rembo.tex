@@ -150,6 +150,15 @@ David Matheson, Nando de Freitas}
   \end{frame}
 
   \begin{frame}
+   \frametitle{Random Search}
+   \begin{figure}[t]
+     \includegraphics[width = 0.48\columnwidth]{./figs/rand}
+     \includegraphics[width = 0.48\columnwidth]{./figs/grid}
+     \label{fig:ESSL_BLR}
+    \end{figure}
+  \end{frame}
+  
+  \begin{frame}
   \frametitle{Hypothesis Testing}
   \begin{itemize}
    \item The paper by~\protect\cite{Chen:2012} proposes to do hypothesis testing to 
@@ -160,11 +169,8 @@ David Matheson, Nando de Freitas}
    \item Also the performance of the algorithm would still 
    depend on irrelevant dimensions.
   \end{itemize}
-
-   
   \end{frame}
 
-  
  \begin{frame}
   \frametitle{The idea}
   To take advantage of low effective dimensionality, we propose to 
@@ -179,7 +185,7 @@ David Matheson, Nando de Freitas}
  \end{frame}
  
  \begin{frame}
-  \frametitle{REMBO}
+  \frametitle{Random EMbedding Bayesian Optimization (REMBO)}
   \begin{itemize}
    \item Choose compact set {\bf \textcolor{myColor}{$\mathcal{Y}$}}.
    \item Draw a random Gaussian matrix A.
