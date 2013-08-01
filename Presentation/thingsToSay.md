@@ -40,3 +40,58 @@ Thus this gives us guidelines on how to set Y.
 
 
 
+
+
+
+
+
+
+## Comments
+Talk about failing more.
+The theorem is probablistic
+You can choose another random embedding.
+
+Gab & Frank: Theorems maybe too long. Try to find a different way of saying theorem 2.
+Get rid of the assumptions.
+
+
+- BO use black box (picture).
+- Application slide. Big overview and the problem it solves.
+- LPsolve has 50000 downloads in a year.
+- Many of them discrete. It's common for problems to have free parameters. 
+- tutorials from 2 days before mention those.
+- BO picture slide. Bring in sequence. what is the objective function.
+- Many acquisition function and well studied area.
+- Theoretical results available.
+
+
+- Thoeretical result for REMBO.
+- Thoroughly.
+- get rid of the curse slide (BO ususally work well in 5-10 dimensions and that's enough for a lot
+of applications)
+- Add axis names to slide 9.
+- Move hypotheis testing to experiments.
+- Cut the caption on random search.
+- Contrast REMBO and BO.
+- Minute longer on slide 14 and walk through.
+
+- add probably 25D.
+- If knew the dimension, we can do well. 
+- All methods have the same function evalutions.
+- Guess wrong can still lead of OK performance.
+- Same number of function evaluations.
+- provably show that 
+- Getting rid of d=4 first and plot it twice.
+- Add branin picture. 2d of branin (often used)
+- lpsolve has 46 dimensions to be optimized.
+- Get rid of references.
+- Conclusion.		
+- Bayesian optimization is up and coming
+- But no high-dim
+- Contribution.
+- Add link to code and advertise it.
+
+
+
+
+
