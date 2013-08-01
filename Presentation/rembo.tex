@@ -109,13 +109,12 @@ David Matheson, Nando de Freitas}
  \begin{frame}
  \frametitle{Curse of Dimensionality}
   \begin{itemize}
-   \item In recent years, the artificial intelligence community has increasingly used Bayesian optimization; see for example~\cite{Martinez-Cantin:2009,Brochu:2009,Srinivas:2010,Hoffman:2011,Lizotte:2011,Azimi:2012}
-   \item But BO is an {\bf \textcolor{myColor}{global}} 
+   \item In recent years, the artificial intelligence community has increasingly used Bayesian optimization.
+   \item BO, however, is an {\bf \textcolor{myColor}{global}} 
     optimization algorithm. Thus it has to 
     {\bf \textcolor{myColor}{explore throughly}}.
-   \item But the volume to be explored increases 
+   \item The volume to be explored increases 
    {\bf \textcolor{myColor}{exponentially}} with dimensionality.
-   \item In high dimensional problems, BO may explore too much!
    \item Thus we are cursed!
    
   \end{itemize}
@@ -130,17 +129,18 @@ David Matheson, Nando de Freitas}
    
  \begin{frame}
    \frametitle{Irrelevant dimensions}
-    \begin{minipage}[l]{0.5\columnwidth}
+    \begin{minipage}[l]{0.6\columnwidth}
      \begin{itemize}
       \item Many researchers have noted that for certain classes of problems 
        most dimensions do not change the objective function significantly
        ~\cite{Bergstra:2012,Hutter:2013_KeyParameters}.
       \item That is to say these problems have 
        {\bf \textcolor{myColor}{low effective dimensionality}}
+       \item How can we take advantage of this?
      \end{itemize}
 
     \end{minipage}
-    \begin{minipage}[r]{0.485\columnwidth}
+    \begin{minipage}[r]{0.385\columnwidth}
      \begin{figure}[t]
       \includegraphics[width = 1.2\columnwidth]
       {./figs/irrelevant}
@@ -150,7 +150,7 @@ David Matheson, Nando de Freitas}
   \end{frame}
 
  \begin{frame}
-  \frametitle{Random Embedding}
+  \frametitle{The idea}
   To take advantage of low effective dimensionality, we propose to 
   randomly {\bf \textcolor{myColor}{embed}} 
   a low dimensional space into the high dimensional space and optimize
@@ -179,6 +179,7 @@ David Matheson, Nando de Freitas}
  \end{frame}
 
  \begin{frame}
+ \frametitle{REMBO}
   \begin{figure}[t!]
 \centering
   \includegraphics[scale=0.28]{../paper/figures/projection.pdf}
@@ -275,7 +276,7 @@ Linear Programming Solver}
 
  \begin{frame}{Bibliography}
   \tiny
-  \bibliographystyle{plain}
+  \bibliographystyle{apalike}
   \bibliography{../paper/bayesopt}
  \end{frame}
  
