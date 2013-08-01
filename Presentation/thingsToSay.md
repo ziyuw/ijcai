@@ -26,5 +26,11 @@ Of course, this is under the assumption that the effective dimensionality is low
 But this still does tell us how to set Y.
 
 ### 15
-What the next thm tells us is that 
+What the next thm tells us is that if the effective dimensionality is d_e, then optimizer in y guaranteed by thm 1 also has a reasonable norm with high probability.
+
+Therefore to set Y we have have to ensure that the bounds contain vectors of reasonable norms.
+
+Thus this gives us guidelines in how to set Y.
+
+### 16
 
