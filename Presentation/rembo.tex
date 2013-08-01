@@ -62,7 +62,7 @@ David Matheson, Nando de Freitas}
 \end{frame}
 
 \begin{frame}
- \frametitle{Bayesian Opitmization}
+ \frametitle{Bayesian Optimization}
  {\bf \textcolor{myColor}{Bayesian Optimization (BO)}}
 
  Let $f: {\cal X} \to \mathbb{R}$ be a function on a compact subset 
@@ -80,7 +80,7 @@ David Matheson, Nando de Freitas}
 \end{frame}
 
 \begin{frame}
- \frametitle{Bayesian Opitmization}
+ \frametitle{Bayesian Optimization}
  \begin{itemize}
   \item BO uses a prior distribution 
   that captures our beliefs about the behavior of $f$.
@@ -90,14 +90,14 @@ David Matheson, Nando de Freitas}
  Specifically, it iterates the following phases:
  \begin{enumerate}
   \item use the prior to decide at which input $x\in \cal X$ to query $f$ next
-  by optimizing {\bf \textcolor{myColor}{aquisition functions}};
+  by optimizing {\bf \textcolor{myColor}{acquisition functions}};
   \item evaluate $f(x)$;
   \item update the prior based on the new data $\langle{}x, f(x)\rangle$.
  \end{enumerate}
 \end{frame}
 
  \begin{frame}
- \frametitle{Bayesian Opitmization}
+ \frametitle{Bayesian Optimization}
   \begin{figure}
    \centering
    \includegraphics[width=0.75\columnwidth]
@@ -149,6 +149,20 @@ David Matheson, Nando de Freitas}
     \end{minipage}
   \end{frame}
 
+  \begin{frame}
+  \frametitle{Hypothesis Testing}
+  \begin{itemize}
+   \item The paper by~\protect\cite{Chen:2012} proposes to do hypothesis testing to 
+   single out the dimensions that are important. 
+   \item The idea is to first do hypothesis testing then only optimize over the 
+   dimensions deemed to be important.
+   \item This idea, however, is not rotation invariant.
+  \end{itemize}
+
+   
+  \end{frame}
+
+  
  \begin{frame}
   \frametitle{The idea}
   To take advantage of low effective dimensionality, we propose to 
@@ -170,7 +184,7 @@ David Matheson, Nando de Freitas}
    \item Repeat:
    \begin{enumerate}
     \item Use the prior to decide at which input $y \in \cal Y$ to query $f$ next
-    by optimizing aquisition functions;
+    by optimizing acquisition functions;
     \item Evaluate {\bf \textcolor{myColor}{$f(Ay)$}};
     \item Update the prior based on the new data 
     {\bf \textcolor{myColor}{$\langle{}y, f(Ay)\rangle$}}.
