@@ -87,13 +87,18 @@ David Matheson, Nando de Freitas}
     $\langle{}y, f(x)\rangle$.
    \end{enumerate} 
   \end{minipage}
-  \begin{minipage}[l]{0.45\columnwidth}
+  \begin{minipage}[l]{0.37\columnwidth}
   \begin{figure}
    \begin{itemize}
-    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation/figs/bo1}
-    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation/figs/bo2}
-    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation/figs/bo3}
+    \item[] \includegraphics[width=0.8\columnwidth]{../Presentation/figs/bo1}
+    \item[] \includegraphics[width=0.8\columnwidth]{../Presentation/figs/bo2}
+    \item[] \includegraphics[width=0.8\columnwidth]{../Presentation/figs/bo3}
    \end{itemize}
+   \caption{Demonstration of Bayesian Optimization. The dashed line is the true
+  objective function. The solid line is the posterior mean while the
+  purple region represent $1$ standard deviation. The green region is these
+  acquisition function the maximizer of which is chosen to be the next point
+  to evaluate.}
   \end{figure}
   \end{minipage}
   \\~\\~\\
@@ -131,7 +136,7 @@ David Matheson, Nando de Freitas}
 
      \begin{itemize}
       \item Often, only few dimensions change the objective function significantly
-       \textcolor{gray}{[Bergstra and Bengio, 2012, Hutter et al., 2013]}.
+       \textcolor{gray}{\cite{Bergstra:2012, Hutter:2013_KeyParameters}}.
       \item That is to say these problems have 
        {\bf \textcolor{myColor}{low effective dimensionality}}.
        \item How can we take advantage of this?
@@ -177,6 +182,12 @@ David Matheson, Nando de Freitas}
 
 \end{block}
 
+\begin{block}{Selected references}
+ \bibliographystyle{plain}
+  \vspace{-.8em}
+  \bibliography{../paper/bayesopt}
+\end{block}
+
 \end{column}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,11 +195,22 @@ David Matheson, Nando de Freitas}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{column}{.48\textwidth}
 \begin{block}{Guarantees}
-\begin{theorem}
+\begin{itemize}
+ \item Given a large enough $\cal Y$, we can locate the optimizer in the low dimensional space with probability $1$:
+ 
+\end{itemize}
+  \begin{theorem}
    \label{prop:1}
    Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
   \end{theorem}
 
+%   \begin{itemize}
+%    \item The previous theorem suggest that given a large enough $\cal Y$, we can locate the optimizer in the low dimensional space.
+%    \item The next theorem guarantees that $\mathcal{Y}$ can be chosen to be small and still contain the optimum with probability at least $1-\epsilon$.
+%   \end{itemize}
+\begin{itemize}
+ \item $\mathcal{Y}$ can be chosen to be small and still contain the optimum with reasonable probability:
+\end{itemize}
  \begin{theorem}
    \label{prop:2}
    Given a box $\cal X$ centered around $\mathbf{0}$, if $\vA$ is a $D\times d$ random Gaussian matrix 
@@ -198,33 +220,85 @@ David Matheson, Nando de Freitas}
  \end{theorem}
 \end{block}
 
-
-
-
-\begin{block}{Guarantees}
-\begin{theorem}
-   \label{prop:1}
-   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
-  \end{theorem}
-
- \begin{theorem}
-   \label{prop:2}
-   Given a box $\cal X$ centered around $\mathbf{0}$, if $\vA$ is a $D\times d$ random Gaussian matrix 
-   with independent entries,
-   there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $$\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$$ with probability at least $1-\epsilon$ where $d_e$ is
-   the effective dimension.
- \end{theorem}
+\begin{block}{Low vs. High Dimensional Kernel}
+ \begin{minipage}[l]{0.57\columnwidth}
+    \begin{itemize}
+    \small
+   \item {\bf \textcolor{myColor}{low-dimensional kernel}} (defined on 
+   {\bf \textcolor{myColor}{$\cal Y$}}):\\
+   $$k_{\ell}^d(\vy^{(1)},\vy^{(2)}) = \exp\left({-\frac{\|\vy^{(1)}-\vy^{(2)}\|^2}{2\ell^2}}\right). $$
+  \end{itemize}
+  \begin{itemize}
+ \small
+  \item {\bf \textcolor{myColor}{high-dimensional kernel}} (defined on 
+   {\bf \textcolor{myColor}{$\cal X$}}):  
+  $$k_{\ell}^D(\vy^{(1)}, \vy^2) = \exp\left( -\frac{\| p_{\mathcal{X}}(\vA\vy^{(1)}) - p_{\mathcal{X}}(\vA\vy^{(2)}) \|^2}{2\ell^2} \right),$$
+  where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard projection operator for our box-constraint: $p_{\mathcal{X}}(\vy) = {\arg \min}_{\vz\in \mathcal{X}} \|\vz-\vy\|_2$. 
+  \end{itemize}
+  \end{minipage}
+ \begin{minipage}[r]{0.42\columnwidth}
+  \begin{figure}
+  \begin{flushright}
+   \includegraphics[width=1\columnwidth]{../Presentation/figs/low_high_dim.png}
+   \end{flushright}
+  \end{figure}
+ \end{minipage}
+ 
 \end{block}
 
-\begin{block}
+\begin{block}{Synthetic Experiments}
+
+  \begin{itemize}
+   \item We embed the 2-dimensional Branin function in D-dimensional spaces to 
+   construct synthetic high-dimensional function.
+   \item We first try D=25 then increase D to be 1,000,000,000.
+   \item We also rotate the constructed synthetic function.
+   \item We compare to two other approaches HD BO~\cite{chen:2012} and random search~\cite{Bergstra:2012}.
+  \end{itemize}
+  
+\begin{figure}[t!]
+  \includegraphics[scale=0.9]{../paper/figures/branin_dis_25.png}
+  \includegraphics[scale=0.9]{../paper/figures/branin_dis_rot.png}
+  \includegraphics[scale=0.9]{../paper/figures/branin_dis_1b.png}
+  \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+   HD BO, and REMBO.
+Left: $D=25$ extrinsic dimensions; Middle: $D=25$, with a rotated objective function; Right: $D=10^9$ extrinsic dimensions. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
+  \label{fig:standard}
+\end{figure}
+\end{block}
+
+\begin{block}{Configuration of lpsolve}
+Automatic Configuration of a Mixed Integer
+Linear Programming Solver:
+\begin{itemize}
+   \item Downloaded over 40000 times in the past year.
+   \item Has 47 discrete parameters.
+   \item Also compared against SMAC and ParamILS which are state of the art algorithms
+   for algorithm configuration.
+  \end{itemize}
+ \begin{figure}[h!]
+\begin{center}
+  \includegraphics[scale=0.8]{../paper/figures/lpsolve.png}
+  \includegraphics[scale=0.8]{../paper/figures/lpsolve_interleave.png}
+  \caption{Performance for configuration of \texttt{lpsolve}; we show the optimality gap \texttt{lpsolve} achieved with the configurations found by the various methods (lower is better). Top: a single run of each method; Bottom: performance with $k=4$ interleaved runs. We plot means and $1/4$ standard deviations over 20 repetitions of the experiment.
+        %results of 20  confidence. Note that the standard deviation of the mean would be slightly smaller than the ones plotted as we repeat the experiment 20 times.
+        }
+\label{fig:lpsolve}
+\end{center}
+\end{figure}
+\end{block}
+
+
+\begin{block}{Conclusions}
  \begin{itemize}
    \item BO is a very efficient algorithm and has many applications.
    \item It, however, is limited to moderate dimensionality.
    \item In this paper we introduced REMBO which only requires a simple modification of the original BO algorithm.
-   \item The performance of REMBO only depends on the effective dimension and it is rotation invariant.
+   \item The performance of REMBO depends solely on the effective dimension and it is rotation invariant.
    \item Code is available at: https:/github.com/ziyuw/rembo
   \end{itemize}
 \end{block}
+
 
 
 %===============================================================================
