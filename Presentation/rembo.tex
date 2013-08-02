@@ -299,6 +299,16 @@ David Matheson, Nando de Freitas}
  \end{theorem}
  \end{frame}
  
+  \begin{frame}
+  \begin{theorem}\label{thm:regret}
+   Suppose $f|_\mathcal T$, is an element of the RKHS 
+   $\mathcal H_{\mathbf{\Lambda}}(\mathbb R^d)$.
+   Let $\vA$ be a $D \times d$ random Gaussian matrix. 
+   Under weak regularity conditions, given any $\epsilon > 0$, we can choose a length-scale $\ell = \ell(\epsilon)$ such that running Expected Improvement with kernel $k_{\ell}$ would have simple regret in $$\mathcal O(t^{-\frac{1}{d}})$$ with probability $1-\epsilon$.
+\end{theorem}
+
+ \end{frame}
+ 
  \begin{frame}
   \frametitle{Low VS. High dimensional Kernel}
   \begin{minipage}[l]{0.56\columnwidth}
@@ -352,9 +362,10 @@ David Matheson, Nando de Freitas}
   
   \begin{figure}
    \includegraphics[width=0.6\columnwidth]{./figs/branin_dis1.png}
-    \caption{Comparison of random search (RANDOM) and REMBO
-     in $D=25$ extrinsic dimensions. 
-     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+    \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
+     $D=25$. We plot means and $1/4$ 
+     standard deviation confidence intervals of the optimality gap across 50 trials.}
    \label{fig:standard}
   \end{figure}
  \end{frame}
@@ -363,9 +374,10 @@ David Matheson, Nando de Freitas}
  \frametitle{BO in 25 dimensions}
  \begin{figure}
    \includegraphics[width=0.6\columnwidth]{./figs/branin_dis2.png}
-    \caption{Comparison of random search (RANDOM) and REMBO
-     in $D=25$ extrinsic dimensions. 
-     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+    \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
+     $D=25$. We plot means and $1/4$ 
+     standard deviation confidence intervals of the optimality gap across 50 trials.}
    \label{fig:standard}
   \end{figure}
  \end{frame}
@@ -375,9 +387,10 @@ David Matheson, Nando de Freitas}
  \frametitle{BO in 25 dimensions}
  \begin{figure}
    \includegraphics[width=0.6\columnwidth]{./figs/branin_dis3.png}
-    \caption{Comparison of random search (RANDOM) and REMBO
-     in $D=25$ extrinsic dimensions. 
-     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+    \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
+     $D=25$. We plot means and $1/4$ 
+     standard deviation confidence intervals of the optimality gap across 50 trials.}
    \label{fig:standard}
   \end{figure}
  \end{frame}
@@ -387,9 +400,10 @@ David Matheson, Nando de Freitas}
  \frametitle{BO in 25 dimensions}
  \begin{figure}
    \includegraphics[width=0.6\columnwidth]{./figs/branin_dis4.png}
-    \caption{Comparison of random search (RANDOM) and REMBO
-     in $D=25$ extrinsic dimensions. 
-     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+    \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
+     $D=25$. We plot means and $1/4$ 
+     standard deviation confidence intervals of the optimality gap across 50 trials.}
    \label{fig:standard}
   \end{figure}
  \end{frame}
@@ -398,9 +412,10 @@ David Matheson, Nando de Freitas}
  \frametitle{BO in 25 dimensions}
  \begin{figure}
    \includegraphics[width=0.6\columnwidth]{./figs/branin_dis5.png}
-    \caption{Comparison of random search (RANDOM) and REMBO
-     in $D=25$ extrinsic dimensions. 
-     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+    \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
+     $D=25$. We plot means and $1/4$ 
+     standard deviation confidence intervals of the optimality gap across 50 trials.}
    \label{fig:standard}
   \end{figure}
  \end{frame}
@@ -416,7 +431,8 @@ David Matheson, Nando de Freitas}
 %    \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_1b.png}
    \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
      method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
-     $D=25$, with a rotated objective function. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
+     $D=25$, with a rotated objective function. We plot means and $1/4$ 
+     standard deviation confidence intervals of the optimality gap across 50 trials.}
    \label{fig:standard}
   \end{figure}
  \end{frame}
