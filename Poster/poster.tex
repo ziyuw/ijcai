@@ -1,14 +1,14 @@
 \documentclass[final]{beamer}
 \usepackage{amsmath,amsthm,amssymb}
 
-\usepackage{tikz}
-\usepackage{wrapfig}
+% \usepackage{tikz}
+% \usepackage{wrapfig}
 % \usepackage{algorithm}
-\usepackage{algorithmic}
+% \usepackage{algorithmic}
 
 \include{mydef}
 \input{macros}
-\usetikzlibrary{calc}
+% \usetikzlibrary{calc}
 
 \usetheme{ubc}
 \usepackage[orientation=portrait,size=a0,scale=1.22,debug]{beamerposter}
@@ -49,9 +49,9 @@
 \title{Bayesian Optimization in High Dimensions via Random Embeddings}
 \author{Ziyu Wang, Masrour Zoghi, Frank Hutter, 
 David Matheson, Nando de Freitas}
-\institute{
-Computer Science Department, University of British Columbia}
-\homepage{http://www.cs.ubc.ca/\string~ziyuw}
+% \institute{
+% Computer Science Department, University of British Columbia}
+% \homepage{http:/www.cs.ubc.ca/\string~ziyuw}
 
 \begin{document}
 \begin{frame}[t]
@@ -90,9 +90,9 @@ Computer Science Department, University of British Columbia}
   \begin{minipage}[l]{0.45\columnwidth}
   \begin{figure}
    \begin{itemize}
-    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation//figs/bo1}
-    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation//figs/bo2}
-    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation//figs/bo3}
+    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation/figs/bo1}
+    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation/figs/bo2}
+    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation/figs/bo3}
    \end{itemize}
   \end{figure}
   \end{minipage}
@@ -115,14 +115,13 @@ Computer Science Department, University of British Columbia}
     \end{minipage}
   \begin{minipage}[r]{0.35\columnwidth}
      \begin{figure}[t]
-      \includegraphics[width=0.45\columnwidth]{../Presentation//figs/animation}  
-      \includegraphics[width=0.55\columnwidth]{../Presentation//figs/wine_arms_EI_T40} \\
-      \includegraphics[width=0.45\columnwidth]{../Presentation//figs/abtest}
-      \includegraphics[width=0.55\columnwidth]{../Presentation//figs/control}
+      \includegraphics[width=0.45\columnwidth]{../Presentation/figs/animation}  
+      \includegraphics[width=0.55\columnwidth]{../Presentation/figs/wine_arms_EI_T40} \\
+      \includegraphics[width=0.45\columnwidth]{../Presentation/figs/abtest}
+      \includegraphics[width=0.55\columnwidth]{../Presentation/figs/control}
      \end{figure}
     \end{minipage}
   
-    
  \begin{itemize}
     \item {\bf \textcolor{red}{ Challenge -- Curse of Dimensionality}}
    \end{itemize}
@@ -169,24 +168,14 @@ Computer Science Department, University of British Columbia}
   \end{itemize}
   \end{block}
   
-  \begin{figure}[t!]
+  \begin{figure}
 \centering
-  \includegraphics[scale=0.6]{../paper/figures/projection.pdf}
-  \caption{Embedding from $d=1$ into $D=2$. 
-%   The box illustrates the 2D constrained space ${\cal X}$, while the thicker red line illustrates the 1D constrained space $\mathcal{Y}$. 
-%   {\bf \textcolor{myColor}{The set $\mathcal{Y}$ must be chosen large enough}} so that the projection of its image, $\vA \mathcal{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.
-  }
-  \label{fig:proj}
-  \vspace{-1em}
+  \includegraphics[scale=0.65]{../paper/figures/projection.pdf}
+  \caption{Embedding from $d=1$ into $D=2$. The box illustrates the 2D constrained space ${\cal X}$, while the thicker red line illustrates the 1D constrained space $\mathcal{Y}$. Note that if $\vA\vy$ is outside $\mathcal{X}$, it is projected onto $\mathcal{X}$. The set $\mathcal{Y}$ must be chosen large enough so that the projection of its image, $\vA \mathcal{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.}
+
 \end{figure}
 
 \end{block}
-
-
-
-
-
-
 
 \end{column}
 
@@ -209,13 +198,31 @@ Computer Science Department, University of British Columbia}
  \end{theorem}
 \end{block}
 
+
+
+
+\begin{block}{Guarantees}
+\begin{theorem}
+   \label{prop:1}
+   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
+  \end{theorem}
+
+ \begin{theorem}
+   \label{prop:2}
+   Given a box $\cal X$ centered around $\mathbf{0}$, if $\vA$ is a $D\times d$ random Gaussian matrix 
+   with independent entries,
+   there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $$\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$$ with probability at least $1-\epsilon$ where $d_e$ is
+   the effective dimension.
+ \end{theorem}
+\end{block}
+
 \begin{block}
  \begin{itemize}
    \item BO is a very efficient algorithm and has many applications.
    \item It, however, is limited to moderate dimensionality.
    \item In this paper we introduced REMBO which only requires a simple modification of the original BO algorithm.
    \item The performance of REMBO only depends on the effective dimension and it is rotation invariant.
-   \item Code is available at: https://github.com/ziyuw/rembo
+   \item Code is available at: https:/github.com/ziyuw/rembo
   \end{itemize}
 \end{block}
 
