@@ -9,7 +9,7 @@
 \usepackage{graphicx} 
 \usepackage{etoolbox}
 \usepackage{xcolor}
-\usepackage{wrapfig}
+
 % Theme for beamer presentation.
 \setbeamertemplate{footline}[page number]{}
 \setbeamertemplate{headline}{}
@@ -324,28 +324,25 @@ David Matheson, Nando de Freitas}
   where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard projection operator for our box-constraint: $p_{\mathcal{X}}(\vy) = {\arg \min}_{\vz\in \mathcal{X}} \|\vz-\vy\|_2$. 
   \end{itemize}
  \end{frame}
- 
-
-
 
  \section{Experiments}
  \begin{frame}<beamer>
   \tableofcontents[currentsection]
  \end{frame}
  
- \begin{frame}<beamer>
-  \frametitle{Experimental Setup}
-  \begin{figure}
-   \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_25.png}
-   \caption{The 2-D Branin test function for global optimization.}
-   \label{fig:standard}
-  \end{figure}
-  - Added additional irrelevant dimensions
-  - Compared to:
-    + Standard Bayesian Optimization
-    + Random search [Bergstra ...]
-    + Hypothesis tests for detecting relevant dimensions [Chen et al]
-  \end{frame}
+%  \begin{frame}<beamer>
+%   \frametitle{Experimental Setup}
+%   \begin{figure}
+%    \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_25.png}
+%    \caption{The 2-D Branin test function for global optimization.}
+%    \label{fig:standard}
+%   \end{figure}
+%   - Added additional irrelevant dimensions
+%   - Compared to:
+%     + Standard Bayesian Optimization
+%     + Random search [Bergstra ...]
+%     + Hypothesis tests for detecting relevant dimensions [Chen et al]
+%   \end{frame}
 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -444,11 +441,14 @@ David Matheson, Nando de Freitas}
  \begin{frame}<beamer>
  \frametitle{Automatic Configuration of a Mixed Integer
 Linear Programming Solver}
+   \begin{itemize}
+   \small
+   \item Downloaded over 40000 times in the past year.
+   \item Has 47 discrete parameters.
+  \end{itemize}
   \begin{figure}[h!]
    \begin{center}
-     \includegraphics[scale=0.35]{../paper/figures/lpsolve.png}\\
-%      \includegraphics[scale=0.35]{../paper/figures/lpsolve_interleave.png}
-     \caption{Performance for configuration of \texttt{lpsolve}; we show the optimality gap \texttt{lpsolve} achieved with the configurations found by the various methods (lower is better). Here SMAC and ParamILS are state of the art algorithms for automatic algorithm configuration.}
+     \includegraphics[width=0.7\columnwidth]{../paper/figures/lpsolve.png}     
    \label{fig:lpsolve}
    \end{center}
    \vspace*{-3mm}
@@ -457,10 +457,16 @@ Linear Programming Solver}
  
  \begin{frame}<beamer>
  \frametitle{Conclusion}
-  \begin{center}
-  \huge
-    Questions?
-  \end{center}
+  \begin{itemize}
+   \item BO is a very efficient algorithm and has many applications.
+   \item It, however, is limited to moderate dimensionality.
+   \item In this paper we introduced REMBO which only requires a simple modification of the original BO algorithm.
+   \item The performance of REMBO only depends on the effective dimension and it is rotation invariant.
+   \item Code is available at: https://github.com/ziyuw/rembo
+
+
+  \end{itemize}
+
  \end{frame}
  
 

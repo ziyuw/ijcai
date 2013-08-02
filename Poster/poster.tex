@@ -43,7 +43,7 @@
 \def\capstyle#1{\small \emph{#1}}
 
 
-
+\definecolor{myColor}{rgb}{0.1,0.0,0.8}
 
 %===============================================================================
 \title{Bayesian Optimization in High Dimensions via Random Embeddings}
@@ -60,24 +60,130 @@ Computer Science Department, University of British Columbia}
 
 % COLUMN 1.
 %===============================================================================
-\begin{block}{Contributions}
- Despite these successes, the approach is restricted to problems of moderate dimension, and several 
-workshops on Bayesian optimization have identified its scaling to high dimensions as one of the holy grails of the field. 
-In this paper, we introduce a novel random embedding idea to attack this problem.
-The resulting Random EMbedding Bayesian Optimization (REMBO) algorithm is very simple
-and applies to domains with both categorical and continuous variables. 
-The experiments demonstrate that REMBO can effectively solve high-dimensional problems, including automatic parameter configuration of a popular
-mixed integer linear programming solver.
-\begin{itemize}
- \item Bayesian optimization techniques have been successfully applied to robotics, planning, sensor placement, recommendation, advertising, intelligent user interfaces and automatic algorithm configuration.
-\end{itemize}
-
-
+\begin{block}{Background}
+ \begin{minipage}[r]{0.62\columnwidth}
+  {\bf \textcolor{myColor}{Bayesian Optimization (BO)}}
+ addresses the following global optimization problem
+ \[ \vx^{\star} = \argmax_{\vx \in {\cal X}} f(\vx). \]
+ We are particularly interested in objective functions $f$ 
+ that may satisfy one or more of the following criteria: 
+ \begin{itemize}
+  \item noisy,
+  \item expensive to evaluate,
+  \item do not have easily available derivatives.
+ \end{itemize}
+ \begin{figure}
+    \centering
+    \includegraphics[width=0.55\columnwidth]
+    {../Presentation/figs/blackbox}
+    \label{fig:traj}
+  \end{figure}
+ BO is a simple algorithm and it repeats the following three steps:
+   \begin{enumerate}
+    \item Use the prior to decide at which input $x \in \cal X$ to query $f$ next
+    by optimizing {\bf \textcolor{myColor}{acquisition functions}};
+    \item Evaluate $f(x)$;
+    \item Update the prior based on the new data 
+    $\langle{}y, f(x)\rangle$.
+   \end{enumerate} 
+  \end{minipage}
+  \begin{minipage}[l]{0.45\columnwidth}
+  \begin{figure}
+   \begin{itemize}
+    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation//figs/bo1}
+    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation//figs/bo2}
+    \item[] \includegraphics[width=0.75\columnwidth]{../Presentation//figs/bo3}
+   \end{itemize}
+  \end{figure}
+  \end{minipage}
+  \\~\\~\\
+  \begin{minipage}[l]{0.63\columnwidth}
+  The Rise of Bayesian Optimization: 
+     \begin{itemize}
+   \item Algorithm Configuration
+   \begin{itemize}
+    \item Automatic ML.
+    \item SAT solver
+    \item Programming by optimization
+    \item etc.
+   \end{itemize}
+   \item Animation and intelligent UI
+   \item A/B testing.
+   \item Control.
+   \item etc.
+   \end{itemize}
+    \end{minipage}
+  \begin{minipage}[r]{0.35\columnwidth}
+     \begin{figure}[t]
+      \includegraphics[width=0.45\columnwidth]{../Presentation//figs/animation}  
+      \includegraphics[width=0.55\columnwidth]{../Presentation//figs/wine_arms_EI_T40} \\
+      \includegraphics[width=0.45\columnwidth]{../Presentation//figs/abtest}
+      \includegraphics[width=0.55\columnwidth]{../Presentation//figs/control}
+     \end{figure}
+    \end{minipage}
+  
+    
+ \begin{itemize}
+    \item {\bf \textcolor{red}{ Challenge -- Curse of Dimensionality}}
+   \end{itemize}
 \end{block}
 
 \begin{block}{Algorithm}
- 
+
+     \begin{itemize}
+      \item Often, only few dimensions change the objective function significantly
+       \textcolor{gray}{[Bergstra and Bengio, 2012, Hutter et al., 2013]}.
+      \item That is to say these problems have 
+       {\bf \textcolor{myColor}{low effective dimensionality}}.
+       \item How can we take advantage of this?
+     \end{itemize}
+
+    
+    The idea:
+   \begin{itemize}
+    \item {\bf \textcolor{myColor}{Embed}} 
+     a low dimensional space into the high dimensional one
+    \item Optimize
+     only on the low dimensional space.
+   \end{itemize}
+
+  \begin{figure}[t]
+   \includegraphics[width = 0.9\columnwidth]
+   {../paper/figures/2to1embedding}
+   \label{fig:ESSL_BLR}
+  \end{figure}
+  
+   
+  \begin{block}{REMBO}
+    \begin{itemize}
+   \item Choose compact set {\bf \textcolor{myColor}{$\mathbf{\mathcal{Y}}$}}.
+   \item Draw a random Gaussian matrix \textcolor{myColor}{$\mathbf{A}$}.
+   \item Repeat:
+   \begin{enumerate}
+    \item Use the prior to decide at which input $y \in \cal Y$ to query $f$ next
+    by optimizing acquisition functions;
+    \item Evaluate {\bf \textcolor{myColor}{$\mathbf{f(Ay)}$}};
+    \item Update the prior based on the new data 
+    {\bf \textcolor{myColor}{$\mathbf{\langle{}y, f(Ay)\rangle}$}}.
+   \end{enumerate}
+  \end{itemize}
+  \end{block}
+  
+  \begin{figure}[t!]
+\centering
+  \includegraphics[scale=0.6]{../paper/figures/projection.pdf}
+  \caption{Embedding from $d=1$ into $D=2$. 
+%   The box illustrates the 2D constrained space ${\cal X}$, while the thicker red line illustrates the 1D constrained space $\mathcal{Y}$. 
+%   {\bf \textcolor{myColor}{The set $\mathcal{Y}$ must be chosen large enough}} so that the projection of its image, $\vA \mathcal{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.
+  }
+  \label{fig:proj}
+  \vspace{-1em}
+\end{figure}
+
 \end{block}
+
+
+
 
 
 
@@ -88,6 +194,31 @@ mixed integer linear programming solver.
 % New Column
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{column}{.48\textwidth}
+\begin{block}{Guarantees}
+\begin{theorem}
+   \label{prop:1}
+   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
+  \end{theorem}
+
+ \begin{theorem}
+   \label{prop:2}
+   Given a box $\cal X$ centered around $\mathbf{0}$, if $\vA$ is a $D\times d$ random Gaussian matrix 
+   with independent entries,
+   there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $$\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$$ with probability at least $1-\epsilon$ where $d_e$ is
+   the effective dimension.
+ \end{theorem}
+\end{block}
+
+\begin{block}
+ \begin{itemize}
+   \item BO is a very efficient algorithm and has many applications.
+   \item It, however, is limited to moderate dimensionality.
+   \item In this paper we introduced REMBO which only requires a simple modification of the original BO algorithm.
+   \item The performance of REMBO only depends on the effective dimension and it is rotation invariant.
+   \item Code is available at: https://github.com/ziyuw/rembo
+  \end{itemize}
+\end{block}
+
 
 %===============================================================================
 \end{column}
