@@ -46,7 +46,7 @@ Thus this gives us guidelines on how to set Y.
 
 
 
-## Comments
+# Comments
 Talk about failing more.
 The theorem is probablistic
 You can choose another random embedding.
@@ -67,8 +67,7 @@ Get rid of the assumptions.
 
 - Thoeretical result for REMBO.
 - Thoroughly.
-- get rid of the curse slide (BO ususally work well in 5-10 dimensions and that's enough for a lot
-of applications)
+- get rid of the curse slide (BO ususally work well in 5-10 dimensions and that's enough for a lot of applications)
 - Add axis names to slide 9.
 - Move hypotheis testing to experiments.
 - Cut the caption on random search.
@@ -85,7 +84,7 @@ of applications)
 - Add branin picture. 2d of branin (often used)
 - lpsolve has 46 dimensions to be optimized.
 - Get rid of references.
-- Conclusion.		
+- Conclusion.
 - Bayesian optimization is up and coming
 - But no high-dim
 - Contribution.

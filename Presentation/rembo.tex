@@ -9,12 +9,15 @@
 \usepackage{graphicx} 
 \usepackage{etoolbox}
 \usepackage{xcolor}
+\usepackage{wrapfig}
 % Theme for beamer presentation.
 \setbeamertemplate{footline}[page number]{}
 \setbeamertemplate{headline}{}
 \setbeamertemplate{navigation symbols}{}
 
 \definecolor{myColor}{rgb}{0.1,0.0,0.8}
+
+
 
 \setbeamertemplate{theorems}[numbered]
 \pretocmd{\part}{\setcounter{theorem}{0}}{}{}
@@ -28,7 +31,7 @@
 %                       beamerthemetree, beamerthemetreebars  
 
 \title{Bayesian Optimization in High Dimensions via Random Embeddings}    
-\author[Ziyu Wang]{Ziyu Wang\\ [3mm]Joint work with Masrour Zoghi, Frank Hutter, 
+\author[Ziyu Wang]{Ziyu Wang\\ [3mm]Joint work with Masrour Zoghi, Frank Hutter, \\
 David Matheson, Nando de Freitas}
 
 \date{}                    % Enter the date or \today between curly braces
@@ -64,122 +67,163 @@ David Matheson, Nando de Freitas}
 \begin{frame}
  \frametitle{Bayesian Optimization}
  {\bf \textcolor{myColor}{Bayesian Optimization (BO)}}
-
- Let $f: {\cal X} \to \mathbb{R}$ be a function on a compact subset 
- ${\cal X} \subseteq \mathbb{R}^D$. 
- BO addresses the following global optimization problem
+ addresses the following global optimization problem
  \[ \vx^{\star} = \argmax_{\vx \in {\cal X}} f(\vx). \]
-
- We are particularly interested in objective functions $f$ 
- that may satisfy one or more of the following criteria: 
- \begin{itemize}
-  \item noisy,
-  \item expensive to evaluate,
-  \item do not have easily available derivatives.
- \end{itemize}
-\end{frame}
-
-\begin{frame}
- \frametitle{Bayesian Optimization}
- \begin{itemize}
-  \item BO uses a prior distribution 
-  that captures our beliefs about the behavior of $f$.
-  \item It then updates this prior with sequentially acquired data.
- \end{itemize}
-
- Specifically, it iterates the following phases:
- \begin{enumerate}
-  \item use the prior to decide at which input $x\in \cal X$ to query $f$ next
-  by optimizing {\bf \textcolor{myColor}{acquisition functions}};
-  \item evaluate $f(x)$;
-  \item update the prior based on the new data $\langle{}x, f(x)\rangle$.
- \end{enumerate}
-\end{frame}
-
- \begin{frame}
- \frametitle{Bayesian Optimization}
-  \begin{figure}
+ \note{add function}
+%  We are particularly interested in objective functions $f$ 
+%  that may satisfy one or more of the following criteria: 
+%  \begin{itemize}
+%   \item noisy,
+%   \item expensive to evaluate,
+%   \item do not have easily available derivatives.
+%  \end{itemize}
+ 
+ \begin{figure}
    \centering
    \includegraphics[width=0.75\columnwidth]
-   {./figs/bo}
+   {./figs/blackbox}
    \label{fig:traj}
   \end{figure}
- \end{frame}
+\end{frame}
+
+% \begin{frame}
+%  \frametitle{Bayesian Optimization}
+%  \begin{itemize}
+%   \item BO uses a prior distribution 
+%   that captures our beliefs about the behavior of $f$.
+%   \item It then updates this prior with sequentially acquired data.
+%  \end{itemize}
+% 
+%  Specifically, it iterates the following phases:
+%  \begin{enumerate}
+%   \item use the prior to decide at which input $x\in \cal X$ to query $f$ next
+%   by optimizing {\bf \textcolor{myColor}{acquisition functions}};
+%   \item evaluate $f(x)$;
+%   \item update the prior based on the new data $\langle{}x, f(x)\rangle$.
+%  \end{enumerate}
+% \end{frame}
 
  \begin{frame}
- \frametitle{Curse of Dimensionality}
+ \frametitle{Bayesian Optimization}
+ \begin{minipage}[l]{0.52\columnwidth}
+  \begin{figure}
+   \begin{itemize}
+    \item[]<1-> \includegraphics[width=0.9\columnwidth]{./figs/bo1}
+    \item[]<2-> \includegraphics[width=0.9\columnwidth]{./figs/bo2}
+    \item[]<3-> \includegraphics[width=0.9\columnwidth]{./figs/bo3}
+   \end{itemize}
+  \end{figure}
+  \end{minipage}
+  \begin{minipage}[r]{0.46\columnwidth}
   \begin{itemize}
-   \item In recent years, the artificial intelligence community has increasingly used Bayesian optimization.
-   \item BO, however, is an {\bf \textcolor{myColor}{global}} 
-    optimization algorithm. Thus it has to 
-    {\bf \textcolor{myColor}{explore throughly}}.
-   \item The volume to be explored increases 
-   {\bf \textcolor{myColor}{exponentially}} with dimensionality.
-   \item Thus we are cursed!
-   
+  \item Repeat:
+   \begin{enumerate}
+    \item Use the prior to decide at which input $x \in \cal X$ to query $f$ next
+    by optimizing {\bf \textcolor{myColor}{acquisition functions}};
+    \item Evaluate $f(x)$;
+    \item Update the prior based on the new data 
+    $\langle{}y, f(x)\rangle$.
+   \end{enumerate} 
   \end{itemize}
+  \end{minipage}
  \end{frame}
 
+ \begin{frame}{The Rise of Bayesian Optimization}
  
-
-\section{REMBO}
- \begin{frame}<beamer>
-  \tableofcontents[currentsection]
+ \begin{minipage}[l]{0.5\columnwidth}
+     \begin{itemize}
+   \footnotesize
+   \item Algorithm Configuration
+   \begin{itemize}
+   \footnotesize
+    \item Automatic ML.
+    \item SAT solver
+    \item Programming by optimization
+    \item etc.
+   \end{itemize}
+   \item Animation and intelligent UI
+   \item A/B testing.
+   \item Control.
+   \item etc.
+   \end{itemize}
+    \end{minipage}
+    \begin{minipage}[r]{0.48\columnwidth}
+     \begin{figure}[t]
+      \includegraphics[width=0.5\columnwidth]{./figs/animation}  
+      \includegraphics[width=0.7\columnwidth]{./figs/wine_arms_EI_T40} \\
+      \includegraphics[width=0.6\columnwidth]{./figs/abtest}
+      \includegraphics[width=0.6\columnwidth]{./figs/control}
+     \end{figure}
+    \end{minipage}
+ \begin{itemize}
+    \item {\bf \textcolor{red}{ Challenge -- Curse of Dimensionality}}
+   \end{itemize}
  \end{frame}
+
+%   \begin{frame}
+%    \frametitle{Random Search}
+%    One idea is to use random search~\cite{Bergstra:2012}:
+%    \begin{figure}[t]
+%      \includegraphics[width = 0.48\columnwidth]{./figs/rand}
+%      \includegraphics[width = 0.48\columnwidth]{./figs/grid}
+%      \label{fig:ESSL_BLR}
+%      \caption{[LEFT]: Random search. [RIGHT]: Regular grid. We can see that
+%      by using random search we can cover each dimension separately much better.}
+%     \end{figure}
+%   \end{frame}
+%   
+%   \begin{frame}
+%   \frametitle{Hypothesis Testing}
+%   \begin{itemize}
+%    \item The paper by~\protect\cite{Chen:2012} proposes to do hypothesis testing to 
+%    single out the dimensions that are important. 
+%    \item The idea is to first do hypothesis testing then only optimize over the 
+%    dimensions deemed to be important.
+%    \item This idea, however, is not rotation invariant.
+%    \item Also the performance of the algorithm would still 
+%    depend on irrelevant dimensions.
+%   \end{itemize}
+%   \end{frame}
+
+
    
  \begin{frame}
-   \frametitle{Irrelevant dimensions}
-    \begin{minipage}[l]{0.6\columnwidth}
+   \frametitle{Not all hope is lost}
+    \begin{minipage}[l]{0.63\columnwidth}
      \begin{itemize}
-      \item Many researchers have noted that for certain classes of problems 
-       most dimensions do not change the objective function significantly
-       ~\cite{Bergstra:2012,Hutter:2013_KeyParameters}.
+      \item Often, only few dimensions change the objective function significantly
+       \textcolor{gray}{[Bergstra and Bengio, 2012, Hutter et al., 2013]}.\\~\\
       \item That is to say these problems have 
-       {\bf \textcolor{myColor}{low effective dimensionality}}
+       {\bf \textcolor{myColor}{low effective dimensionality}}.\\~\\
        \item How can we take advantage of this?
      \end{itemize}
 
     \end{minipage}
-    \begin{minipage}[r]{0.385\columnwidth}
+    \begin{minipage}[r]{0.35\columnwidth}
      \begin{figure}[t]
-      \includegraphics[width = 1.2\columnwidth]
-      {./figs/irrelevant}
+      \includegraphics[width = 1.0\columnwidth]
+      {./figs/2to1embedding.pdf}
       \label{fig:ESSL_BLR}
      \end{figure}
     \end{minipage}
   \end{frame}
 
-  \begin{frame}
-   \frametitle{Random Search}
-   One idea is to use random search~\cite{Bergstra:2012}:
-   \begin{figure}[t]
-     \includegraphics[width = 0.48\columnwidth]{./figs/rand}
-     \includegraphics[width = 0.48\columnwidth]{./figs/grid}
-     \label{fig:ESSL_BLR}
-     \caption{[LEFT]: Random search. [RIGHT]: Regular grid. We can see that
-     by using random search we can cover each dimension separately much better.}
-    \end{figure}
-  \end{frame}
   
-  \begin{frame}
-  \frametitle{Hypothesis Testing}
-  \begin{itemize}
-   \item The paper by~\protect\cite{Chen:2012} proposes to do hypothesis testing to 
-   single out the dimensions that are important. 
-   \item The idea is to first do hypothesis testing then only optimize over the 
-   dimensions deemed to be important.
-   \item This idea, however, is not rotation invariant.
-   \item Also the performance of the algorithm would still 
-   depend on irrelevant dimensions.
-  \end{itemize}
-  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{REMBO}
+ \begin{frame}<beamer>
+  \tableofcontents[currentsection]
+ \end{frame}
 
- \begin{frame}
-  \frametitle{The idea}
-  To take advantage of low effective dimensionality, we propose to 
-  randomly {\bf \textcolor{myColor}{embed}} 
-  a low dimensional space into the high dimensional space and optimize
-  only on the low dimensional space.
+  \begin{frame}
+  \frametitle{The idea} 
+   \begin{itemize}
+    \item {\bf \textcolor{myColor}{Embed}} 
+     a low dimensional space into the high dimensional one
+    \item Optimize
+     only on the low dimensional space.
+   \end{itemize}
+
   \begin{figure}[t]
    \includegraphics[width = 0.9\columnwidth]
    {../paper/figures/2to1embedding}
@@ -189,26 +233,48 @@ David Matheson, Nando de Freitas}
  
  \begin{frame}
   \frametitle{Random EMbedding Bayesian Optimization (REMBO)}
-  \begin{itemize}
-   \item Choose compact set {\bf \textcolor{myColor}{$\mathcal{Y}$}}.
-   \item Draw a random Gaussian matrix A.
+  
+  \begin{block}{BO}
+   \begin{itemize}
+   \item Repeat:
+   \begin{enumerate}
+    \item Use the prior to decide at which input $x \in \cal X$ to query $f$ next
+    by optimizing acquisition functions;
+    \item Evaluate $f(x)$;
+    \item Update the prior based on the new data 
+    $\langle{}y, f(x)\rangle$.
+   \end{enumerate} 
+  \end{itemize}
+  \end{block}
+  
+   
+  \begin{block}{REMBO}
+    \begin{itemize}
+   \item Choose compact set {\bf \textcolor{myColor}{$\mathbf{\mathcal{Y}}$}}.
+   \item Draw a random Gaussian matrix \textcolor{myColor}{$\mathbf{A}$}.
    \item Repeat:
    \begin{enumerate}
     \item Use the prior to decide at which input $y \in \cal Y$ to query $f$ next
     by optimizing acquisition functions;
-    \item Evaluate {\bf \textcolor{myColor}{$f(Ay)$}};
+    \item Evaluate {\bf \textcolor{myColor}{$\mathbf{f(Ay)}$}};
     \item Update the prior based on the new data 
-    {\bf \textcolor{myColor}{$\langle{}y, f(Ay)\rangle$}}.
+    {\bf \textcolor{myColor}{$\mathbf{\langle{}y, f(Ay)\rangle}$}}.
    \end{enumerate}
   \end{itemize}
+  \end{block}
+
+  
  \end{frame}
 
  \begin{frame}
- \frametitle{REMBO}
+ \frametitle{REMBO Visualization}
   \begin{figure}[t!]
 \centering
   \includegraphics[scale=0.28]{../paper/figures/projection.pdf}
-  \caption{Embedding from $d=1$ into $D=2$. The box illustrates the 2D constrained space ${\cal X}$, while the thicker red line illustrates the 1D constrained space $\mathcal{Y}$. {\bf \textcolor{myColor}{The set $\mathcal{Y}$ must be chosen large enough}} so that the projection of its image, $\vA \mathcal{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.}
+  \caption{Embedding from $d=1$ into $D=2$. 
+%   The box illustrates the 2D constrained space ${\cal X}$, while the thicker red line illustrates the 1D constrained space $\mathcal{Y}$. 
+%   {\bf \textcolor{myColor}{The set $\mathcal{Y}$ must be chosen large enough}} so that the projection of its image, $\vA \mathcal{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.
+  }
   \label{fig:proj}
   \vspace{-1em}
 \end{figure}
@@ -218,7 +284,7 @@ David Matheson, Nando de Freitas}
   \frametitle{Guarantees}
   \begin{theorem}
    \label{prop:1}
-   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random matrix $\vA \in \mathbb{R}^{D\times d}$ with independent entries sampled according to $\mathcal{N}(0, 1)$ and $d\geq d_e$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
+   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
   \end{theorem}
  \end{frame}
  
@@ -226,33 +292,140 @@ David Matheson, Nando de Freitas}
   \frametitle{Setting $\cal Y$}
   \begin{theorem}
    \label{prop:2}
-   Suppose we want to optimize a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimension $d_e \leq d$ subject to the box constraint $\mathcal{X} \subset \mathbb{R}^D$, where $\mathcal{X}$ is centered around $\mathbf{0}$. Let us denote one of the optimizers by $\vx^{\star}$.
-   Suppose further that the effective subspace $\cal T$ of $f$ is such that $\cal T$ is the span of $d_e$ basis vectors. 
-   Let $\vx^{\star}_\top \in \cal{T} \cap \mathcal{X}$ be an optimizer of $f$ inside $\mathcal{T}$. 
-   If $\vA$ is a $D\times d$ random matrix with independent standard Gaussian entries,
-   there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$ with probability at least $1-\epsilon$.
+   Given a box $\cal X$ centered around $\mathbf{0}$, if $\vA$ is a $D\times d$ random Gaussian matrix 
+   with independent entries,
+   there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $$\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$$ with probability at least $1-\epsilon$ where $d_e$ is
+   the effective dimension.
  \end{theorem}
  \end{frame}
  
  \begin{frame}
   \frametitle{Low VS. High dimensional Kernel}
-  \begin{itemize}
+  \begin{minipage}[l]{0.56\columnwidth}
+    \begin{itemize}
+    \small
    \item {\bf \textcolor{myColor}{low-dimensional kernel}} (defined on 
-   {\bf \textcolor{myColor}{$\cal Y$}}):
-  \[ k_{\ell}^d(\vy^{(1)},\vy^{(2)}) = \exp\left({-\frac{\|\vy^{(1)}-\vy^{(2)}\|^2}{2\ell^2}}\right). \]
-   \item {\bf \textcolor{myColor}{high-dimensional kernel}} (defined on 
+   {\bf \textcolor{myColor}{$\cal Y$}}):\\
+   $k_{\ell}^d(\vy^{(1)},\vy^{(2)}) = \exp\left({-\frac{\|\vy^{(1)}-\vy^{(2)}\|^2}{2\ell^2}}\right). $
+  \end{itemize}
+  \end{minipage}
+ \begin{minipage}[r]{0.42\columnwidth}
+  \begin{figure}
+  \begin{flushright}
+   \includegraphics[width=1\columnwidth]{./figs/low_high_dim.png}
+   \end{flushright}
+  \end{figure}
+ \end{minipage}
+ \begin{itemize}
+ \small
+  \item {\bf \textcolor{myColor}{high-dimensional kernel}} (defined on 
    {\bf \textcolor{myColor}{$\cal X$}}):  
   $$k_{\ell}^D(\vy^{(1)}, \vy^2) = \exp\left( -\frac{\| p_{\mathcal{X}}(\vA\vy^{(1)}) - p_{\mathcal{X}}(\vA\vy^{(2)}) \|^2}{2\ell^2} \right),$$
-where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard projection operator for our box-constraint: $p_{\mathcal{X}}(\vy) = {\arg \min}_{\vz\in \mathcal{X}} \|\vz-\vy\|_2$; . 
+  where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard projection operator for our box-constraint: $p_{\mathcal{X}}(\vy) = {\arg \min}_{\vz\in \mathcal{X}} \|\vz-\vy\|_2$. 
   \end{itemize}
-
  \end{frame}
+ 
+
 
 
  \section{Experiments}
  \begin{frame}<beamer>
   \tableofcontents[currentsection]
  \end{frame}
+ 
+ \begin{frame}<beamer>
+  \frametitle{Experimental Setup}
+  \begin{figure}
+   \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_25.png}
+   \caption{The 2-D Branin test function for global optimization.}
+   \label{fig:standard}
+  \end{figure}
+  - Added additional irrelevant dimensions
+  - Compared to:
+    + Standard Bayesian Optimization
+    + Random search [Bergstra ...]
+    + Hypothesis tests for detecting relevant dimensions [Chen et al]
+  \end{frame}
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{frame}<beamer>
+  \frametitle{BO in 25 dimensions}
+  
+  \begin{figure}
+   \includegraphics[width=0.6\columnwidth]{./figs/branin_dis1.png}
+    \caption{Comparison of random search (RANDOM) and REMBO
+     in $D=25$ extrinsic dimensions. 
+     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+ 
+ \begin{frame}<beamer>
+ \frametitle{BO in 25 dimensions}
+ \begin{figure}
+   \includegraphics[width=0.6\columnwidth]{./figs/branin_dis2.png}
+    \caption{Comparison of random search (RANDOM) and REMBO
+     in $D=25$ extrinsic dimensions. 
+     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+ 
+ 
+ \begin{frame}<beamer>
+ \frametitle{BO in 25 dimensions}
+ \begin{figure}
+   \includegraphics[width=0.6\columnwidth]{./figs/branin_dis3.png}
+    \caption{Comparison of random search (RANDOM) and REMBO
+     in $D=25$ extrinsic dimensions. 
+     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+ 
+ 
+ \begin{frame}<beamer>
+ \frametitle{BO in 25 dimensions}
+ \begin{figure}
+   \includegraphics[width=0.6\columnwidth]{./figs/branin_dis4.png}
+    \caption{Comparison of random search (RANDOM) and REMBO
+     in $D=25$ extrinsic dimensions. 
+     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+ 
+ \begin{frame}<beamer>
+ \frametitle{BO in 25 dimensions}
+ \begin{figure}
+   \includegraphics[width=0.6\columnwidth]{./figs/branin_dis5.png}
+    \caption{Comparison of random search (RANDOM) and REMBO
+     in $D=25$ extrinsic dimensions. 
+     We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across $50$ trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ 
+ \begin{frame}<beamer>
+  \frametitle{Invariant to rotation}
+  \begin{figure}
+%    \includegraphics[width=0.31\columnwidth]{../paper/figures/branin_dis_25.png}
+   \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_rot.png}
+%    \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_1b.png}
+   \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
+     method by~\textcolor{gray}{[Chen et al., 2012]} (HD BO), and REMBO.
+     $D=25$, with a rotated objective function. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
+   \label{fig:standard}
+  \end{figure}
+ \end{frame}
+
+ 
+ 
  
  \begin{frame}<beamer>
   \frametitle{BO in 1,000,000,000 dimensions}
@@ -267,21 +440,7 @@ where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard pr
   \end{figure}
  \end{frame}
  
- \begin{frame}<beamer>
-  \frametitle{Invariant to rotation}
-  
-  
-  \begin{figure}
-%    \includegraphics[width=0.31\columnwidth]{../paper/figures/branin_dis_25.png}
-   \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_rot.png}
-%    \includegraphics[width=0.6\columnwidth]{../paper/figures/branin_dis_1b.png}
-   \caption{Comparison of random search (RANDOM), Bayesian optimization (BO),
-     method by~\protect\cite{Chen:2012} (HD BO), and REMBO.
-     $D=25$, with a rotated objective function. We plot means and $1/4$ standard deviation confidence intervals of the optimality gap across 50 trials.}
-   \label{fig:standard}
-  \end{figure}
- \end{frame}
-
+ 
  \begin{frame}<beamer>
  \frametitle{Automatic Configuration of a Mixed Integer
 Linear Programming Solver}
@@ -295,23 +454,14 @@ Linear Programming Solver}
    \vspace*{-3mm}
   \end{figure}
  \end{frame}
-
- \begin{frame}{Bibliography}
-  \tiny
-  \bibliographystyle{apalike}
-  \bibliography{../paper/bayesopt}
- \end{frame}
  
  \begin{frame}<beamer>
- \frametitle{Thank You!}
+ \frametitle{Conclusion}
   \begin{center}
   \huge
     Questions?
   \end{center}
  \end{frame}
- 
- 
-
  
 
 \end{document}
