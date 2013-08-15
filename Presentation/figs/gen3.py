@@ -41,6 +41,6 @@ patch = patches.PathPatch(path, facecolor='black', lw=1, alpha='1')
 ax.add_patch(patch)
 ax.set_xlim(-2.6, 4)
 ax.set_ylim(-1.2,1.2)
-plt.savefig("highDimKernel.pdf",bbox_inches='tight',dpi=100)
+plt.savefig("highDimKernel.png",bbox_inches='tight',dpi=100)
 
 plt.show()

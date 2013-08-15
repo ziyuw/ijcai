@@ -58,7 +58,7 @@ David Matheson, Nando de Freitas}
 \end{frame}
 
 
-\section{Motivation}
+\section{Bayesian Optimization}
 \label{sec:ahmc}
 \begin{frame}<beamer>
  \tableofcontents[currentsection]
@@ -105,52 +105,78 @@ David Matheson, Nando de Freitas}
 
  \begin{frame}
  \frametitle{Bayesian Optimization}
- \begin{minipage}[l]{0.52\columnwidth}
   \begin{figure}
+  
    \begin{itemize}
-    \item[]<1-> \includegraphics[width=0.9\columnwidth]{./figs/bo1}
-    \item[]<2-> \includegraphics[width=0.9\columnwidth]{./figs/bo2}
-    \item[]<3-> \includegraphics[width=0.9\columnwidth]{./figs/bo3}
+   \begin{center}
+    \item[]<1-> \includegraphics[width=0.48\columnwidth]{./figs/bo1}
+    \item[]<2-> \includegraphics[width=0.48\columnwidth]{./figs/bo2}
+    \item[]<3-> \includegraphics[width=0.48\columnwidth]{./figs/bo3}
+    \end{center}
    \end{itemize}
+  
   \end{figure}
-  \end{minipage}
-  \begin{minipage}[r]{0.46\columnwidth}
-  \begin{itemize}
-  \item Repeat:
-   \begin{enumerate}
-    \item Use the prior to decide at which input $x \in \cal X$ to query $f$ next
-    by optimizing {\bf \textcolor{myColor}{acquisition functions}};
-    \item Evaluate $f(x)$;
-    \item Update the prior based on the new data 
-    $\langle{}y, f(x)\rangle$.
-   \end{enumerate} 
-  \end{itemize}
-  \end{minipage}
+%   \begin{minipage}[r]{0.46\columnwidth}
+%   \begin{itemize}
+%   \item Repeat:
+%    \begin{enumerate}
+%     \item Use the prior to decide at which input $x \in \cal X$ to query $f$ next
+%     by optimizing {\bf \textcolor{myColor}{acquisition functions}};
+%     \item Evaluate $f(x)$;
+%     \item Update the prior based on the new data 
+%     $\langle{}x, f(x)\rangle$.
+%    \end{enumerate} 
+%   \end{itemize}
+%   \end{minipage}
+
  \end{frame}
 
+ \begin{frame}
+ \frametitle{Bayesian Optimization}
+ 
+
+ \begin{block}{BO}
+   \begin{itemize}
+   \item Repeat:
+   \begin{enumerate}
+    \item Use the prior to decide at which input $x \in \cal X$ to query $f$ next
+    by optimizing acquisition functions;
+    \item Evaluate $f(x)$;
+    \item Update the prior based on the new data 
+    $\langle{}x, f(x)\rangle$.
+   \end{enumerate} 
+  \end{itemize}
+  \end{block}
+ \end{frame}
+ 
  \begin{frame}{The Rise of Bayesian Optimization}
  
- \begin{minipage}[l]{0.5\columnwidth}
+ \begin{minipage}[l]{0.50\columnwidth}
      \begin{itemize}
    \footnotesize
-   \item Algorithm Configuration
-   \begin{itemize}
-   \footnotesize
-    \item Automatic ML.
-    \item SAT solver
-    \item Programming by optimization
-    \item etc.
-   \end{itemize}
-   \item Animation and intelligent UI
-   \item A/B testing.
-   \item Control.
+    \item Theory \\
+    \textcolor{gray}{[Srinivas et al., ICML 2010]} \\
+    \textcolor{gray}{[Bull, JMLR 2011]} \\
+    \textcolor{gray}{[de Freitas et al., ICML 2012]}
+    \item Automatic ML  \\
+    \textcolor{gray}{[Snoek et al., NIPS 2012]}
+    \item SAT solvers \\
+    \textcolor{gray}{[Hutter et al., FMCAD 2007]}
+    \item Programming by optimization \\
+    \textcolor{gray}{[Hoos, CACM 2012]}
+   \item Animation and intelligent UIs \textcolor{gray}{[Brochu et al., SIGGRAPH 2010]}
+   \item Computer vision architectures \textcolor{gray}{[Bergstra et al., ICML 2013]}
+   \item A/B testing and analytics \\
+   \textcolor{gray}{[Scott, 2013]}
+   \item Robotics and control
    \item etc.
    \end{itemize}
     \end{minipage}
     \begin{minipage}[r]{0.48\columnwidth}
      \begin{figure}[t]
-      \includegraphics[width=0.5\columnwidth]{./figs/animation}  
-      \includegraphics[width=0.7\columnwidth]{./figs/wine_arms_EI_T40} \\
+      
+      \includegraphics[width=0.9\columnwidth]{./figs/wine_arms_EI_T40} 
+      \includegraphics[width=0.28\columnwidth]{./figs/animation} \\
       \includegraphics[width=0.6\columnwidth]{./figs/abtest}
       \includegraphics[width=0.6\columnwidth]{./figs/control}
      \end{figure}
@@ -189,19 +215,19 @@ David Matheson, Nando de Freitas}
    
  \begin{frame}
    \frametitle{Not all hope is lost}
-    \begin{minipage}[l]{0.63\columnwidth}
+    \begin{minipage}[l]{0.60\columnwidth}
      \begin{itemize}
       \item Often, only few dimensions change the objective function significantly
-       \textcolor{gray}{[Bergstra and Bengio, 2012, Hutter et al., 2013]}.\\~\\
+       \textcolor{gray}{[Bergstra and Bengio, 2012,\\Hutter et al., 2013]}.\\~\\
       \item That is to say these problems have 
        {\bf \textcolor{myColor}{low effective dimensionality}}.\\~\\
        \item How can we take advantage of this?
      \end{itemize}
 
     \end{minipage}
-    \begin{minipage}[r]{0.35\columnwidth}
+    \begin{minipage}[r]{0.38\columnwidth}
      \begin{figure}[t]
-      \includegraphics[width = 1.0\columnwidth]
+      \includegraphics[width = 1.25\columnwidth]
       {./figs/2to1embedding.pdf}
       \label{fig:ESSL_BLR}
      \end{figure}
@@ -242,7 +268,7 @@ David Matheson, Nando de Freitas}
     by optimizing acquisition functions;
     \item Evaluate $f(x)$;
     \item Update the prior based on the new data 
-    $\langle{}y, f(x)\rangle$.
+    $\langle{}x, f(x)\rangle$.
    \end{enumerate} 
   \end{itemize}
   \end{block}
@@ -284,7 +310,7 @@ David Matheson, Nando de Freitas}
   \frametitle{Guarantees}
   \begin{theorem}
    \label{prop:1}
-   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
+   Assume we are given a function $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ with effective dimensionality $d_e$ and a random Gaussian matrix $\vA \in \mathbb{R}^{D\times d}$ with $d\geq d_e$. Then, with probability 1, for any $\vx \in \mathbb{R}^D$, there exists a $ \vy \in \mathbb{R}^d$ such that $f(\vx) = f(\vA\vy)$.
   \end{theorem}
  \end{frame}
  
@@ -293,20 +319,10 @@ David Matheson, Nando de Freitas}
   \begin{theorem}
    \label{prop:2}
    Given a box $\cal X$ centered around $\mathbf{0}$, if $\vA$ is a $D\times d$ random Gaussian matrix 
-   with independent entries,
+   with independent entries and $d\geq d_e$,
    there exists an optimizer $\vy^\star \in \mathbb{R}^{d}$ such that $f(\vA\vy^\star) = f(\vx^\star_\top)$ and $$\|\vy^\star\|_2 \leq \frac{\sqrt{d_e}}{\epsilon}\|\vx^{\star}_\top\|_2$$ with probability at least $1-\epsilon$ where $d_e$ is
    the effective dimension.
  \end{theorem}
- \end{frame}
- 
-  \begin{frame}
-  \begin{theorem}\label{thm:regret}
-   Suppose $f|_\mathcal T$, is an element of the RKHS 
-   $\mathcal H_{\mathbf{\Lambda}}(\mathbb R^d)$.
-   Let $\vA$ be a $D \times d$ random Gaussian matrix. 
-   Under weak regularity conditions, given any $\epsilon > 0$, we can choose a length-scale $\ell = \ell(\epsilon)$ such that running Expected Improvement with kernel $k_{\ell}$ would have simple regret in $$\mathcal O(t^{-\frac{1}{d}})$$ with probability $1-\epsilon$.
-\end{theorem}
-
  \end{frame}
  
  \begin{frame}
@@ -334,6 +350,18 @@ David Matheson, Nando de Freitas}
   where $p_{\mathcal{X}}:\mathbb{R}^D \rightarrow \mathbb{R}^D$ is the standard projection operator for our box-constraint: $p_{\mathcal{X}}(\vy) = {\arg \min}_{\vz\in \mathcal{X}} \|\vz-\vy\|_2$. 
   \end{itemize}
  \end{frame}
+ 
+  \begin{frame}
+  \begin{theorem}\label{thm:regret}
+   Suppose $f|_\mathcal T$, is an element of the RKHS 
+   $\mathcal H_{\mathbf{\Lambda}}(\mathbb R^d)$.
+   Let $\vA$ be a $D \times d$ random Gaussian matrix. 
+   Under weak regularity conditions, given any $\epsilon > 0$, we can choose a length-scale $\ell = \ell(\epsilon)$ such that running Expected Improvement with kernel $k_{\ell}^d$ would have simple regret in $$\mathcal O(t^{-\frac{1}{d}})$$ with probability $1-\epsilon$.
+\end{theorem}
+
+ \end{frame}
+ 
+ 
 
  \section{Experiments}
  \begin{frame}<beamer>
@@ -459,8 +487,8 @@ David Matheson, Nando de Freitas}
 Linear Programming Solver}
    \begin{itemize}
    \small
-   \item Downloaded over 40000 times in the past year.
-   \item Has 47 discrete parameters.
+   \item lpsolve was downloaded over 40,000 times in the past year.
+   \item Has 47 discrete parameters (choices).
   \end{itemize}
   \begin{figure}[h!]
    \begin{center}
@@ -472,12 +500,12 @@ Linear Programming Solver}
  \end{frame}
  
  \begin{frame}<beamer>
- \frametitle{Conclusion}
+ \frametitle{Conclusions}
   \begin{itemize}
-   \item BO is a very efficient algorithm and has many applications.
-   \item It, however, is limited to moderate dimensionality.
-   \item In this paper we introduced REMBO which only requires a simple modification of the original BO algorithm.
-   \item The performance of REMBO only depends on the effective dimension and it is rotation invariant.
+   \item BO is a very efficient method and has many applications.
+   \item It has been, however, limited to moderate dimensionality.
+   \item We introduced REMBO which only requires a simple modification of BO.
+   \item The performance of REMBO depends solely on the effective dimension and it is rotation invariant.
    \item Code is available at: https://github.com/ziyuw/rembo
 
 
